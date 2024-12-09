@@ -32,7 +32,7 @@ class ParticipantesController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
         $datos = $request->all();
 
         // Verificar que el evento y el usuario existan

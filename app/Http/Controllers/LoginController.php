@@ -35,8 +35,8 @@ class LoginController extends Controller
         try {
             // Configuracion de protocolo SMTP
             $mail->SMTPDebug = 0;$mail->isSMTP();$mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;$mail->Username = 'astiviamax@gmail.com';
-            $mail->Password = 'diulyvcniykrwacn';$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; $mail->Port = 587;
+            $mail->SMTPAuth = true;$mail->Username = 'iblasaub@gmail.com';
+            $mail->Password = 'voftedeboocuvkuv';$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; $mail->Port = 587;
         
             $mail->setFrom('noreply@sgea.com', 'SGEA'); $mail->addAddress("$user->email");
             
@@ -131,13 +131,18 @@ class LoginController extends Controller
     public function register(Request $request){
         //recolectamos los datos en una variable
         $Datos=$request->all();
+
         //Verificamos si ya existe el usuario por medio de su curp
-        $user = usuarios::where('curp', $Datos['curp'])->first();
+        //$user = usuarios::where('curp', $Datos['curp'])->first();
+
+        //VALIDACIÓN PARA PREVENIR DUPLICIDAD DE CURP, CORREO O TELEFONO
+        $user = usuarios::where('curp', $Datos['curp'])->orWhere('email', $Datos['email'])->orWhere('telefono', $Datos['telefono'])->first();
+
         if ($user !== null) {
             //EL USUARIO EXISTE
             //verificamos su estado
             if ( $user->estado == "alta,registrado"){
-                return redirect('login')->with('error', 'Ya existe un usuario con la CURP ingresada');
+                return redirect('login')->with('error', 'Ya existe un usuario con la CURP, CORREO o TELEFONO ingresados');
             }else if ($user->estado =="alta,no registrado"){
                 //Iniciamos el proceso para verificar el usuario
                 if (!$request->session()->has('verification_code')) {
@@ -203,7 +208,7 @@ class LoginController extends Controller
                     if($part!==null){
                         //EL USUARIO ESTA REGISTRADO EN ALGUN EVENTO
                         $request->session()->put('eventoID', $part->evento->id);$request->session()->put('rol', $part->rol);
-                        return redirect()->route('evento.index', ['acronimo' => $part->evento->acronimo, 'edicion' => $part->evento->edicion]);
+                        return redirect()->route('eventos.index', ['acronimo' => $part->evento->acronimo, 'edicion' => $part->evento->edicion]);
                     }else{
                         $request->session()->put('eventoID', null);$request->session()->put('rol', null);
                         return redirect()->route('dashboard');

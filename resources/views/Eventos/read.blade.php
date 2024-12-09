@@ -29,7 +29,7 @@
         <div class="links">
             @role('Administrador')
                 <a href="{{ route('articulos.evento.index', ['eventoId' => $evento->id]) }}" class="link-card">
-                    <i class="lar la-newspaper la-3x"></i>Articulos
+                    <i class="lar la-newspaper la-3x"></i>Artículos
                 </a>
                 <a href="{{ route('autores.index', ['eventoId' => $evento->id]) }}" class="link-card">
                     <i class="las la-pen-nib la-3x"></i>Autores
@@ -40,14 +40,14 @@
                 <a href="{{ route('revisores.index', ['eventoId' => $evento->id]) }}" class="link-card">
                     <i class="las la-glasses la-3x"></i>Revisores
                 </a>
-            @endrole           
+                <!-- ADICIÓN DEL BOTÓN PARA GENERAR REPORTE - FALTA INCLUÍR LA NUEVA VISTA -->
+                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisReportes/')}}" class="link-card">
+                    <i class="las la-newspaper la-3x"></i> Reporte y agenda del evento
+                </a>
+            @endrole
+            <!-- CAMBIOS PARA PODER VER LOS ARTÍCULOS COMO AUTOR Y/O REVISOR 
             @if(session('rol')==='Autor')
-                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisArticulos/')}}" class="link-card">
-                    <i class="las la-newspaper la-3x"></i> Mis Articulos
-                </a>
-                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/Evaluaciones/')}}" class="link-card">
-                    <i class="las la-list-alt la-3x"></i>Historial de Evaluaciones
-                </a>
+                
                 
             @elseif(session('rol')==='Revisor')
                 <a href="{{url(session('eventoID').'/ArticulosPendientes/'.Auth::user()->id)}}" class="link-card">
@@ -58,7 +58,29 @@
                 </a>
             @else
             
-            @endif
+            @endif-->
+            @role('Autor')
+                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisArticulos/')}}" class="link-card">
+                    <i class="las la-newspaper la-3x"></i> Mis Artículos
+                </a>
+                <!-- ADICIÓN DEL BOTÓN PARA GENERAR REPORTE -->
+                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisReportes/')}}" class="link-card">
+                    <i class="las la-newspaper la-3x"></i> Reportes de mis artículos
+                </a>
+
+                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/Evaluaciones/')}}" class="link-card">
+                    <i class="las la-list-alt la-3x"></i>Historial de Evaluaciones
+                </a>
+            @endrole
+            @role('Revisor')
+            <a href="{{url(session('eventoID').'/ArticulosPendientes/'.Auth::user()->id)}}" class="link-card">
+                    <i class="las la-clock la-3x"></i> Articulos Pendientes
+                </a>
+                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/ArticulosRevisados/')}}" class="link-card">
+                    <i class="las la-check-circle la-3x"></i> Articulos Revisados
+                </a>
+            @endrole
+
          </div>
     </div>
 

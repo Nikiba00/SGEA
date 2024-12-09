@@ -12,12 +12,14 @@
             <strong>No hay datos</strong>
         @else
             @role('Administrador')
-                <button id="migrate-button"><i class="las la-rocket la-2x"></i></button>
+                <!--<button id="migrate-button"><i class="las la-rocket la-2x"></i></button> AÑADIR EL TOOLTIP PARA 'migrar'-->
+                <button class="tooltip" id="migrate-button"><i class="las la-rocket la-2x"></i><span class="tooltip-box">Migrar</span></button>
+                <button class="tooltip" id="deleteSelected"><i class="las la-trash-alt la-2x"></i><span class="tooltip-box">Eliminar Seleccionados</span></button>
             @endrole
         <div class="ajuste" >
-            @role('Administrador')
+            <!--@role('Administrador')
             <button class="tooltip" id="deleteSelected"><i class="las la-trash-alt la-2x"></i><span class="tooltip-box">Eliminar Seleccionados</span></button>
-            @endrole
+            @endrole-->
             <table id="example" class="display  responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
@@ -27,7 +29,7 @@
                         <th>LOGO</th>
                         <th>NOMBRE</th>
                         <th>ACRONIMO</th>
-                        <th>EDicion</th>
+                        <th>EDICIÓN</th>
                         <th>ESTADO</th>
                         <th> </th>
                     </tr>

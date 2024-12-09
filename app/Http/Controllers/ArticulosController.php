@@ -322,4 +322,11 @@ class ArticulosController extends Controller
         
     }
 
+    /*FUNCIÓN PARA CONTAR ARTÍCULOS
+    public function verificarArticulos(){
+        $articulosCount = articulos::where('evento_id', session('eventoID'))->where('autor_id', Auth::user()->id)->count();
+        return view('eventos/', compact('articulosCount'));
+    }*/
+
+
 }

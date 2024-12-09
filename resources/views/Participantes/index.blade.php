@@ -80,10 +80,11 @@
         <h2>Añadir participante</h2>
         <strong>Evento: {!!$evento->acronimo!!} {!!$evento->edicion!!}</strong>
         {!! Form::open(['route' => 'participantes.store', 'id' => 'participante-form']) !!}
+        <!-- PARA MANDAR EL ID DEL EVENTO -->
+        {!! Form::hidden('evento_id', '', ['id' => 'evento-id']) !!}
             <label for="participante-name">Seleccionar Usuario:</label>
             {!! Form::select('usuario_id', $usuarios->pluck('nombre_completo', 'id'), null, ['required' => 'required']) !!}
 
-            
             <button type="submit">Guardar</button>
         {!!Form::close()!!}
     </div>
@@ -170,4 +171,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+</script>
+
+<!-- PARA OBTENER EL ID DEL EVENTO Y FUNCIONE EL AGREGAR PARTICIPANTES -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Capturar el evento_id desde la URL
+        const path = window.location.pathname; // Obtiene el path completo
+        const segmentos = path.split('/');    // Divide el path en segmentos
+        const evento_id = segmentos[segmentos.length - 1]; // Último segmento (el número 3)
+
+        // Insertar el evento_id en el campo oculto
+        const inputEventoId = document.getElementById('evento-id');
+        if (inputEventoId) {
+            inputEventoId.value = evento_id; // Establecer el valor del campo oculto
+            console.log("Evento ID capturado y asignado:", evento_id); // Verificar en consola
+        }
+    });
 </script>

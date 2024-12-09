@@ -39,14 +39,25 @@ class eventos extends Model
     }
 
     // Mutators
-    public function getFechaInicioNormalAttribute($value)
+    /*public function getFechaInicioNormalAttribute($value)
     {
-        return Carbon::parse($value)->locale('es')->isoFormat('dddd DD [de] MMMM [de] YYYY');
+        return Carbon::parse($value, 'America/Mexico_City')->locale('es')->isoFormat('dddd DD [de] MMMM [de] YYYY');
     }
 
     public function getFechaFinNormalAttribute($value)
     {
-        return Carbon::parse($value)->locale('es')->isoFormat('dddd DD [de] MMMM [de] YYYY');
+        return Carbon::parse($value, 'America/Mexico_City')->locale('es')->isoFormat('dddd DD [de] MMMM [de] YYYY');
+    }*/
+    
+    //CORRECCIÓN DE FECHAS
+    public function getFechaInicioNormalAttribute()
+    {
+        return Carbon::parse($this->fecha_inicio)->locale('es')->isoFormat('dddd DD [de] MMMM [de] YYYY');
+    }
+
+    public function getFechaFinNormalAttribute()
+    {
+        return Carbon::parse($this->fecha_fin)->locale('es')->isoFormat('dddd DD [de] MMMM [de] YYYY');
     }
 
     public function getEstadoAttribute($value)

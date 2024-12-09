@@ -1,10 +1,24 @@
 @extends('layouts.master')
-    <title>Mis Articulos</title>
+    <title>Mis Artículos</title>
 @section('Content')
     <div class="container">
         <div class="search-create">
             <h1 id="titulo-h1"> Mis Artículos</h1>
             <button id="create-btn"><i class="las la-plus-circle la-2x"></i></button>
+<!-- 
+            /*CONSULTA PARA CESIÓN DE DERECHOS*/
+SELECT e.logo, e.nombre AS "nombre_evento", e.acronimo, ar.titulo, u.ap_paterno, u.ap_materno, u.nombre
+FROM eventos e
+JOIN articulos ar ON e.id = ar.evento_id
+JOIN articulos_autores aa ON ar.id = aa.articulo_id
+JOIN usuarios u ON u.id = aa.usuario_id
+WHERE 
+	 e.id = 4 AND aa.articulo_id = 3;
+
+     https://community.jaspersoft.com/documentation/
+     https://packagist.org/packages/geekcom/phpjasper
+     https://temp-mail.org/es/
+            -->
         </div>    
         @if($Articulos->isEmpty())
             <strong>No hay datos</strong>

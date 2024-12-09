@@ -1,5 +1,5 @@
 @extends('layouts.master')
-    <title>Detalles del articulo</title>ñ
+    <title>Detalles del articulo</title>
 @section('Content')
     <div class="container">
         <h1>{!!$articulo->titulo!!}</h1>

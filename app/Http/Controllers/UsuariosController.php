@@ -155,7 +155,8 @@ class usuariosController extends Controller
         
         if ($part) {
             // El usuario está registrado en algún evento
-            return redirect()->route('evento.index', [$part->evento->acronimo, $part->evento->edicion]);
+            //ERROR RESUELTO. FALTABA UNA S EN "EVENTOS.INDEX"
+            return redirect()->route('eventos.index', [$part->evento->acronimo, $part->evento->edicion]);
         } else {
             // El usuario no está registrado en ningún evento
             return redirect()->route('dashboard');
