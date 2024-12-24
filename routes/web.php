@@ -38,6 +38,22 @@ Route::put('{evento_id}/articulo/{id}', [ArticulosController::class, 'update']);
     Route::post('/verify-email', [UsuariosController::class, 'verifyEmail'])->name('verify-email');
     Route::post('/insert-user', [UsuariosController::class, 'insertUser'])->name('insertar-usuario');
 
+//REPORTES
+Route::middleware(['auth'])->group(function () {
+    //REPORTES DE ARTICULOS (AUTORES)
+    Route::middleware('can:reportes.generar')->group(function () {
+        Route::post('{articulo_id}/reportes', [ReportesController::class, 'generar'])->name('reportes.generar');
+        Route::get('{articulo_id}/reportes/preview', [ReportesController::class, 'vistaPrevia'])->name('reportes.preview');
+        Route::get('{articulo_id}/reportes/download', [ReportesController::class, 'descargar'])->name('reportes.download');
+    });
+    //REPORTES DE EVENTOS (ADMINS Y COMITÉ)
+    Route::middleware('can:reportes.generarEvento')->group(function () {
+        Route::post('{evento_id}/reportes/evento', [ReportesController::class, 'generarEvento'])->name('reportes.generarEvento');
+        Route::get('{evento_id}/reportes/evento/preview', [ReportesController::class, 'vistaPreviaEvento'])->name('reportes.previewEvento');
+        Route::get('{evento_id}/reportes/evento/download', [ReportesController::class, 'descargarEvento'])->name('reportes.downloadEvento');
+    });
+});
+
 
 //AUTORES
 Route::resource('autores', ArticulosAutoresController::class)->except(['index'])->middleware('auth');
@@ -46,6 +62,9 @@ Route::get('{evento_id}/autor/{id}', [ArticulosAutoresController::class, 'show']
 Route::get('{eventoId}/autores/{id}/edit', [ArticulosAutoresController::class, 'edit'])->middleware('auth');
 
 Route::get('{eventoId}_{id}/MisArticulos/', [ArticulosController::class, 'AuthorArticles'])->middleware('auth');
+//INCLUIR LA RUTA DE REPORTES
+//Route::get('{eventoId}_{id}/MisReportes/', [ReportesController::class, 'AuthorArticles'])->middleware('auth');
+
 Route::get('{eventoId}_{id}/Evaluaciones/', [ArticulosController::class, 'Evaluations'])->middleware('auth');
 Route::get('{eventoId}_{id}/detalle/', [ArticulosController::class, 'Details'])->middleware('auth');
 

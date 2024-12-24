@@ -298,7 +298,6 @@ class ArticulosController extends Controller
                         $query->where('usuario_id', $id);
                     })
                     ->get();
-
         //Catalogos necesarios
         $Areas =areas::select('nombre','id')->get();
         $Autores = articulosAutores::select('usuarios.id', 'usuarios.ap_paterno', 'usuarios.nombre', 'usuarios.ap_materno')
@@ -306,7 +305,7 @@ class ArticulosController extends Controller
                     ->groupBy('usuarios.id', 'usuarios.ap_paterno', 'usuarios.ap_materno','usuarios.nombre')
                     ->orderBy('usuarios.ap_paterno')
                     ->get();
-
+        
         return view ('Articulos.index',compact ('Articulos','Areas','Autores'));
     }
 

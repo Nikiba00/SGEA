@@ -1,14 +1,10 @@
 @extends('layouts.master')
-    <title>Articulos</title>
+    <title>Reportes</title>
 @section('Content')
     <div class="container">
         <div class="search-create">
-            @if(session('rol')=='Autor')
-                <h1 id="titulo-h1">Mis Artículos</h1>
-            @else
-                <h1 id="titulo-h1">Artículos</h1>
-            @endif
-            <button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i><span class="tooltip-box">Crear Artículo</span></button>
+        <h1 id="titulo-h1">Reportes</h1>
+            <!--<button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i><span class="tooltip-box">Crear Artículo</span></button>-->
         </div>    
         @if($Articulos->isEmpty())
             <strong>No hay datos</strong>
