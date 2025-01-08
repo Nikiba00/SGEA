@@ -1,9 +1,9 @@
 @extends('layouts.master')
-    <title>Articulos</title>
+    <title>Artículos</title>
 @section('Content')
     <div class="container">
         <div class="search-create">
-            @if(session('rol')=='Autor')
+            @if(auth()->user()->hasRole('Autor'))
                 <h1 id="titulo-h1">Mis Artículos</h1>
             @else
                 <h1 id="titulo-h1">Artículos</h1>
@@ -19,13 +19,14 @@
                 <thead>            
                     <tr>
                         <th><input type="checkbox" id="selectAll"></th>
-                        <th>TITULO</th>
+                        <th>TÍTULO</th>
                         <th>AUTORES</th>
                         <th>Correspondencia</th>
-                        @role('Administrador')
-                        <th>revisores</th>
-                        @endrole
-                        <th>Area</th>
+                        <!--Antes en lugar de @ if usaba @ role-->
+                        @if(auth()->user()->hasRole(['Administrador', 'Comite']))
+                        <th>Revisores</th>
+                        @endif
+                        <th>Área</th>
                         <th>Estado</th>
                         <th></th>
                     </tr>
@@ -53,7 +54,8 @@
                             <td>
                                 <a href="mailto:{!!$art->autor_correspondencia->email!!}" style="text-decoration:underline;">{!!$art->autor_correspondencia->email!!}</a>
                             </td>
-                            @role(['Administrador','Organizador'])
+                            <!--Antes en lugar de @ if usaba @ role-->
+                            @if(auth()->user()->hasRole(['Administrador', 'Comite']))
                             <td>
                                 <ul>
                                     @if($art->revisores->isEmpty())
@@ -68,10 +70,9 @@
                                             </li>
                                         @endforeach
                                     @endif
-                                    
                                 </ul>
                             </td>
-                            @endrole
+                            @endif
                             <td>{!!$art->area->nombre!!}</td>
                             <td>{!!$art->estado!!}</td>
                             <td>
@@ -80,7 +81,7 @@
                                 <a href="{{url('articulos/'.$art->id)}}" onclick="event.preventDefault(); 
                                         Swal.fire({
                                             title: '¿Estás seguro?',
-                                            text: '¿Realmente desea eliminar este articulo?',
+                                            text: '¿Realmente desea eliminar este artículo?',
                                             icon: 'warning',
                                             showCancelButton: true,
                                             confirmButtonText: 'Sí, eliminar',
@@ -111,13 +112,13 @@
             <span class="close">&times;</span>
             <h2>Registro de Artículo</h2>
             {!! Form::open(['url' => '/articulos', 'enctype' => 'multipart/form-data', 'id' => 'article-form']) !!}
-                {!! Form::label('title', 'Titulo del Articulo:') !!}
+                {!! Form::label('title', 'Titulo del Artículo:') !!}
                 {!! Form::text('titulo', null, ['id'=>'titulo','required']) !!}
                 
-                {!! Form::label('desc', 'Resumen del Articulo:') !!}
+                {!! Form::label('desc', 'Resumen del Artículo:') !!}
                 {!! Form::textarea('resumen',null,['rows'=>4,'cols'=>50,'id'=>'description']) !!}
                 
-                {!! Form::label('area', 'Area del Articulo:') !!}
+                {!! Form::label('area', 'Área del Artículo:') !!}
                 {!! Form::select('area_id', $Areas->pluck('nombre', 'id'), null, ['placeholder' => 'Seleccionar...', 'required']) !!}
 
                 {!! Form::label('pdf', 'Subir archivo pdf:') !!}
@@ -134,7 +135,7 @@
                 {!! Form::label('label_instruction', 'Seleccionar Autor:') !!}
                 <select name="autor" id="selected-author">
                     @if($Autores=== null)
-                        <option value="">Aun no se han registrado autores</option>
+                        <option value="">Aún no se han registrado autores</option>
                     @else
                         <option value="">Seleccionar...</option>
                         @if(Auth::user()->id!==1)
@@ -165,7 +166,7 @@
                 {!! Form::hidden('id', null, ['id' => 'id']) !!}
                 {!! Form::label('curp', 'CURP:') !!}
                 {!! Form::text('curp', null, ['id'=>'curp','required']) !!}
-                <span id="curp-info" style="color:green; display:none;">Se verifico la CURP, favor de llenar todos los campos</span>
+                <span id="curp-info" style="color:green; display:none;">Se verificó la CURP, favor de llenar todos los campos</span>
                 {!! Form::label('nombre', 'Nombre:') !!}
                 {!! Form::text('nombre', null, ['id'=>'nombre','required']) !!}
                 {!! Form::label('ap_paterno', 'Apellido Paterno:') !!}

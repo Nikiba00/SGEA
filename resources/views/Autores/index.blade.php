@@ -13,10 +13,10 @@
                 <thead>
                     <tr>
                         <th>AUTOR</th>
-                        <th>INSTITUCION</th>
-                        @role('Administrador')
+                        <th>INSTITUCIÓN</th>
+                        @if(auth()->user()->hasRole(['Administrador']))
                         <th>EMAIL DE CORRESPONDENCIA</th>
-                        @endrole
+                        @endif
                         <th>CONTROLES</th>
                     </tr>
                 </thead>
@@ -25,18 +25,18 @@
                     <tr>
                         <td>{!!$autor->usuario->nombre_completo!!} </td>
                         <td>{{ Helper::truncate($autor->institucion, 50) }}</td>
-                        @role('Administrador')
+                        @if(auth()->user()->hasRole(['Administrador']))
                         <td>
                             <a href="mailto:{!!$autor->email!!}">{!!$autor->email!!}</a>
                         </td>
-                        @endrole
+                        @endif
                         <td>
                             <a href="{{url ($autor->evento_id.'/autor/'.$autor->usuario->id) }}"><i class="las la-info-circle la-2x"></i></a>
-                            @role(['Administrador','Organizador'])
+                            @if(auth()->user()->hasRole(['Administrador','Comite']))
                                 <a href="{!! url($autor->evento_id.'/autores/'.$autor->usuario->id.'/edit')!!}">
                                     <i class="las la-user-edit la-2x"></i>
                                 </a>
-                            @endrole
+                            @endif
                         </td>
                     </tr>
                     @endforeach

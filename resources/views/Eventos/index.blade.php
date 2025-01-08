@@ -4,31 +4,27 @@
     <div class="container">
         <div class="search-create">
             <h1 id="titulo-h1">Eventos</h1>
-            @role(['Administrador','Organizador'])
+            @if(auth()->user()->hasRole(['Administrador','Comite']))
                 <button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i><span class="tooltip-box">Crear Evento</span></button>
-            @endrole
+            @endif
         </div>
         @if($Eventos->isEmpty())
             <strong>No hay datos</strong>
         @else
-            @role('Administrador')
-                <!--<button id="migrate-button"><i class="las la-rocket la-2x"></i></button> AÑADIR EL TOOLTIP PARA 'migrar'-->
+            @if(auth()->user()->hasRole(['Administrador']))
                 <button class="tooltip" id="migrate-button"><i class="las la-rocket la-2x"></i><span class="tooltip-box">Migrar</span></button>
                 <button class="tooltip" id="deleteSelected"><i class="las la-trash-alt la-2x"></i><span class="tooltip-box">Eliminar Seleccionados</span></button>
-            @endrole
+            @endif
         <div class="ajuste" >
-            <!--@role('Administrador')
-            <button class="tooltip" id="deleteSelected"><i class="las la-trash-alt la-2x"></i><span class="tooltip-box">Eliminar Seleccionados</span></button>
-            @endrole-->
             <table id="example" class="display  responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        @role('Administrador')
+                        @if(auth()->user()->hasRole(['Administrador']))
                         <th><input type="checkbox" id="selectAll"></th>
-                        @endrole
+                        @endif
                         <th>LOGO</th>
                         <th>NOMBRE</th>
-                        <th>ACRONIMO</th>
+                        <th>ACRÓNIMO</th>
                         <th>EDICIÓN</th>
                         <th>ESTADO</th>
                         <th> </th>
@@ -37,9 +33,9 @@
                 <tbody>
                     @foreach ($Eventos as $e)
                     <tr>
-                        @role('Administrador')
+                        @if(auth()->user()->hasRole(['Administrador']))
                         <td><input type="checkbox" class="selectRow" data-id="{{ $e->id }}"></td>
-                        @endrole
+                        @endif
                         <td>
                             <div class="evento-nombre-logo">
                                 <a href="{!! 'eventos/'.$e->id !!}" style="color:#000;">
@@ -52,14 +48,14 @@
                         <td>{!!$e->edicion!!}</td>
                         <td>{!!$e->estado!!}</td>
                         <td>
-                            @role (['Administrador','Comite'])
+                            @if(auth()->user()->hasRole(['Administrador','Comite']))
                             @if($e->acronimo === 'CIDICI')
                                 <a href="{{url($e->id.'/parameters')}}"><i class="las la-cog la-2x"></i></a>
                             @endif
-                            @endrole
+                            @endif
                             <a href="{!! 'eventos/'.$e->id !!}"><i class="las la-info-circle la-2x"></i></a>
                             
-                            @role(['Administrador', 'Organizador'])
+                            @if(auth()->user()->hasRole(['Administrador','Comite']))
                             <a href="{!!'eventos/'.$e->id.'/edit'!!}">
                                 <i class="las la-pen la-2x"></i>
                             </a>
@@ -85,7 +81,7 @@
                                 @method('DELETE')
                                 @csrf
                             </form>
-                            @endrole
+                            @endif
                             @if ($e->id !== session('eventoID'))
                                 {!! Form::open(['route' => 'participantes.store', 'id' => 'participante-form']) !!}{!! Form::hidden('evento_id', $e->id) !!}{!! Form::hidden('usuario_id', Auth::user()->id) !!}
                                     <button id ="unirme" type="submit"><i class="las la-user-plus la-2x"></i> Unirme</button>
@@ -127,7 +123,7 @@
         <span class="close">&times;</span>
         <h2>Registro de Evento</h2>
         {!! Form::open(['url'=>'/eventos', 'enctype' => 'multipart/form-data', 'id' => 'evento-form']) !!}
-            {!! Form::label('logo', 'Imagenes en sistema:') !!}
+            {!! Form::label('logo', 'Imágenes en sistema:') !!}
                 @if (isset($sysImgs) && !empty($sysImgs))
                     <div class="carousell">
                         @foreach ($sysImgs as $image)
@@ -135,7 +131,7 @@
                         @endforeach
                     </div>
                 @else
-                    <strong>Aun no hay imagenes en el sistema</strong>
+                    <strong>Aun no hay imágenes en el sistema</strong>
                 @endif
             {!! Form::file('logo', ['id' => 'logo', 'class' => 'form-control', 'accept' => 'image/jpeg, image/png, image/webp']) !!}
             {!! Form::hidden('logo', null, ['id' => 'selected_img']) !!}
@@ -146,7 +142,7 @@
             {!! Form::label('nombre', 'Nombre:') !!}
             {!! Form::text('nombre', null, ['id'=>'nombre','required']) !!}
 
-            {!! Form::label('acronimo', 'Acronimo:') !!}
+            {!! Form::label('acronimo', 'Acrónimo:') !!}
             {!! Form::text('acronimo', null, ['id'=>'acronimo','required']) !!}
 
             {!! Form::label('fecha de Inicio', 'Inicia:') !!}

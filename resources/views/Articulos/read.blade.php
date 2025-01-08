@@ -1,5 +1,5 @@
 @extends('layouts.master')
-    <title>Detalles del articulo</title>
+    <title>Detalles del artículo</title>
 @section('Content')
     <div class="container">
         <h1>{!!$articulo->titulo!!}</h1>
@@ -18,11 +18,11 @@
                 @endforeach
             </ul>
         </p>
-        @role('Administrador')
+        @if(auth()->user()->hasRole(['Administrador']))
             <p class="pRead"><i class="las la-envelope"></i> <strong>Correspondencia: </strong><a href="mailto:{!! $articulo->autor_correspondencia->email!!}"> {!! $articulo->autor_correspondencia->email!!} </a>({!! $articulo->autor_correspondencia->usuario->nombre_completo!!})</p>
-        @endrole
+        @endif
         <p class="pRead"><i class="las la-file-alt"></i> <strong>Resumen: </strong>{!!$articulo->resumen!!}</p>
-        <p class="pRead"><i class="las la-id-card"></i> <strong>Area: </strong>{!!$articulo->area->nombre!!}</p>
+        <p class="pRead"><i class="las la-id-card"></i> <strong>Área: </strong>{!!$articulo->area->nombre!!}</p>
         <p class="pRead"><i class="las la-folder-open"></i><strong>Revisores: </strong>
                 @foreach ($revisores as $index => $revisor)
                         {!! $revisor->usuario->nombre_completo !!}<a href="{{url('usuarios/'.$autor->usuario->id )}}"><i class="las la-info-circle"></i></a>
@@ -31,14 +31,16 @@
         <p class="pRead"><i class="las la-history"></i><strong>Estado: </strong>{!!$articulo->estado!!}</p>
         <p class="pRead"><i class="las la-folder"></i><strong> Archivo: </strong>{!!$articulo->archivo!!}</p>
         <a href="{{ url()->previous() }}"><button><i class="las la-arrow-circle-left"></i> Regresar</button></a> 
-        @role('Administrador')
-            <a href="{{url($articulo->evento->id.'/articulo/'.$articulo->id.'/edit')}}"><button><i class="las la-edit"></i> Modificar Articulo</button></a>
-        @endrole
+        @if(auth()->user()->hasRole(['Administrador']))
+            <a href="{{url($articulo->evento->id.'/articulo/'.$articulo->id.'/edit')}}"><button><i class="las la-edit"></i> Modificar Artículo</button></a>
+        @endif
         @if($pdfUrl)
             <a href="{!!$pdfUrl !!}" target="_blank"><button><i class="las la-file-pdf"></i> Ver en nueva Pestaña</button></a>
             <br><br>
-            <div id="pdf-viewer" >
-                <iframe src="{!!$pdfUrl !!}" frameborder="0" style="width:90%; height: 70%;"></iframe>
+            <!--<div id="pdf-viewer" >-->
+            <div class="LectorPDF">
+                <!--<iframe src="{!!$pdfUrl !!}" frameborder="0" style="width:90%; height: 70%;"></iframe>-->
+                <iframe src="{!!$pdfUrl !!}" frameborder="0"></iframe>
             </div>
         @else
             <strong>No hay archivo para mostrar</strong>

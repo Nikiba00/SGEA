@@ -22,10 +22,10 @@
                         <div class="card">
                             <div class="profile-header">                                        
                                         <img src="{{asset('SGEA/public/assets/img/lgoTec.png')}}" alt="">                                        
-                                        <h2 class="name">Articulos Disponibles</h2>
+                                        <h2 class="name">Artículos Disponibles</h2>
                                 </div>
                                 <div class="profile-body">
-                                    <p class="descripcion">Estos son los articulos disponibles</p>
+                                    <p class="descripcion">Estos son los artículos disponibles</p>
                                 </div>
                         </div>
                     </div>

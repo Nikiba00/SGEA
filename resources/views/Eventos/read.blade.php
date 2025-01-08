@@ -1,5 +1,5 @@
 @extends('layouts.master')
-    <title>Informacion</title>
+    <title>Información</title>
 @section('Content')
     <div class="container">
         <h1>{!!$evento->nombre!!} ({!!$evento->acronimo!!} {!!$evento->edicion!!})</h1>
@@ -12,8 +12,8 @@
                 <br><br>
                 <p><strong>Termina: </strong>{!!$evento->fecha_finNormal!!}</p>
                 <br><br>
-                @role(['Administrador','Comite'])
-                <strong>Status del evento:</strong>{!!$evento->estado!!}
+                @if(auth()->user()->hasRole(['Administrador','Comite']))
+                <strong>Estatus del evento: </strong>{!!$evento->estado!!}
                 <br><br>
                 <div class="eventControls">
                     <a href="{{url('eventos/'.$evento->id.'/edit')}}"><i class="las la-pen la-2x"></i></a>
@@ -21,13 +21,29 @@
                         <a href="{{url($evento->id.'/parameters')}}"><i class="las la-cog la-2x"></i></a>
                         <a href="" id="migrate-button" data-evento-id="{{ $evento->id }}"><i class="las la-rocket la-2x"></i></a>
                         <a href="{{ route('evento.cancel', session('eventoID')) }}"><i class="las la-times la-2x"></i></a>
+                        <a href="javascript:void(0);" 
+                            onclick="generarReporte('{{ $evento->id }}');" 
+                            class="tooltip-container">
+                            <i class="las la-file-alt la-2x"></i>
+                            <span class="tooltip-text">Generar reporte del evento</span>
+                        </a>
+                        <a href="{!! url($evento)!!}"
+                            class="tooltip-container">
+                            <i class="las la-eye la-2x"></i>
+                            <span class="tooltip-text">Vista previa del reporte</span>
+                        </a>
+                        <a href="{{url($evento)}}" onclick="event.preventDefault();"
+                            class="tooltip-container">
+                            <i class="las la-download la-2x"></i>
+                            <span class="tooltip-text">Descargar reporte</span>
+                        </a>
                     @endif
                 </div>
-                @endrole
+                @endif
             </div>
         </div>
         <div class="links">
-            @role('Administrador')
+            @if(auth()->user()->hasRole(['Administrador']))
                 <a href="{{ route('articulos.evento.index', ['eventoId' => $evento->id]) }}" class="link-card">
                     <i class="lar la-newspaper la-3x"></i>Artículos
                 </a>
@@ -42,9 +58,9 @@
                 </a>
                 <!-- ADICIÓN DEL BOTÓN PARA GENERAR REPORTE - FALTA INCLUÍR LA NUEVA VISTA -->
                 <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisReportes/')}}" class="link-card">
-                    <i class="las la-newspaper la-3x"></i> Reporte y agenda del evento
+                    <i class="las la-newspaper la-3x"></i> Agenda del evento
                 </a>
-            @endrole
+            @endif
             <!-- CAMBIOS PARA PODER VER LOS ARTÍCULOS COMO AUTOR Y/O REVISOR 
             @if(session('rol')==='Autor')
                 
@@ -59,7 +75,7 @@
             @else
             
             @endif-->
-            @role('Autor')
+            @if(auth()->user()->hasRole(['Autor']))
                 <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisArticulos/')}}" class="link-card">
                     <i class="las la-newspaper la-3x"></i> Mis Artículos
                 </a>
@@ -71,15 +87,15 @@
                 <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/Evaluaciones/')}}" class="link-card">
                     <i class="las la-list-alt la-3x"></i>Historial de Evaluaciones
                 </a>
-            @endrole
-            @role('Revisor')
+            @endif
+            @if(auth()->user()->hasRole(['Revisor']))
             <a href="{{url(session('eventoID').'/ArticulosPendientes/'.Auth::user()->id)}}" class="link-card">
-                    <i class="las la-clock la-3x"></i> Articulos Pendientes
+                    <i class="las la-clock la-3x"></i> Artículos Pendientes
                 </a>
                 <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/ArticulosRevisados/')}}" class="link-card">
-                    <i class="las la-check-circle la-3x"></i> Articulos Revisados
+                    <i class="las la-check-circle la-3x"></i> Artículos Revisados
                 </a>
-            @endrole
+            @endif
 
          </div>
     </div>
@@ -90,7 +106,7 @@
         <span class="close">&times;</span>
         <h2>Registro de Evento</h2>
         {!! Form::open(['url'=>'/eventos', 'enctype' => 'multipart/form-data', 'id' => 'evento-form']) !!}
-            {!! Form::label('logo', 'Imagenes en sistema:') !!}
+            {!! Form::label('logo', 'Imágenes en sistema:') !!}
                 @if (isset($sysImgs) && !empty($sysImgs))
                     <div class="carousell">
                         @foreach ($sysImgs as $image)
@@ -98,7 +114,7 @@
                         @endforeach
                     </div>
                 @else
-                    <strong>Aun no hay imagenes en el sistema</strong>
+                    <strong>Aún no hay imágenes en el sistema</strong>
                 @endif
             {!! Form::file('logo', ['id' => 'logo', 'class' => 'form-control', 'accept' => 'image/jpeg, image/png, image/webp']) !!}
             {!! Form::hidden('logo', null, ['id' => 'selected_img']) !!}
@@ -109,7 +125,7 @@
             {!! Form::label('nombre', 'Nombre:') !!}
             {!! Form::text('nombre', null, ['id'=>'nombre','required']) !!}
 
-            {!! Form::label('acronimo', 'Acronimo:') !!}
+            {!! Form::label('acronimo', 'Acrónimo:') !!}
             {!! Form::text('acronimo', null, ['id'=>'acronimo','required']) !!}
 
             {!! Form::label('fecha de Inicio', 'Inicia:') !!}
@@ -187,3 +203,32 @@
 
     });
 </script>
+
+<style>
+        .tooltip-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip-container .tooltip-text {
+        visibility: hidden;
+        width: 100px;
+        background-color: lightgray;
+        color: #000;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
+
+    .tooltip-container:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+</style>

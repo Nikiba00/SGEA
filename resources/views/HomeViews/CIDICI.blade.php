@@ -8,7 +8,7 @@
         <img src="{{  asset('SGEA/public/assets/uploads/'.$evento->logo) }}" alt="Imagen" class="img-thumbnail img-selectable" style="width: 400px;">
         <div class="info">
 
-            <strong>Edicion</strong>
+            <strong>Edición</strong>
             <p>{!!$evento->edicion!!}</p>
             
             <p><strong>Inicia: </strong>{!!$evento->fecha_inicio!!}</p>
@@ -20,14 +20,14 @@
             <ul>
                 <li><a href=""><i class="las la-book"></i>Talleres</a></li>
                 <li><a href=""><i class="las la-book"></i>Conferencias</a></li>
-                <li><a href=""><i class="las la-book"></i>ponencias</a></li>
-                <li><a href="{{ url('articulos') }}"><i class="las la-book"></i>Articulos</a></li>
-                @role(['Administrador','Organizador'])
+                <li><a href=""><i class="las la-book"></i>Ponencias</a></li>
+                <li><a href="{{ url('articulos') }}"><i class="las la-book"></i>Artículos</a></li>
+                @if(auth()->user()->hasRole(['Administrador','Comite']))
                 <li><a href="{{url('participantes/evento/'.$evento->id)}}"><i class="las la-user"></i>Participantes</a></li>
-                <li><a href=""><i class="las la-book"></i>autores</a></li>
-                <li><a href=""><i class="las la-book"></i>revisores</a></li>
-                <li><a href="{{ url('areas') }}"><i class="las la-book"></i>areas</a></li>
-                @endrole
+                <li><a href=""><i class="las la-book"></i>Autores</a></li>
+                <li><a href=""><i class="las la-book"></i>Revisores</a></li>
+                <li><a href="{{ url('areas') }}"><i class="las la-book"></i>Áreas</a></li>
+                @endif
                 
             </ul>
 

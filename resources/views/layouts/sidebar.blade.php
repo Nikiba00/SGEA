@@ -30,7 +30,7 @@
                             <span class="las la-pen-nib"></span>Autores
                         </a>
                     </li>
-                    @role('Administrador')
+                    @if(auth()->user()->hasRole(['Administrador']))
                         <li>
                             <a href="{{ url(session('eventoID').'/articulos') }}" class="{{ Request::is(session('eventoID').'/articulos') ? 'active' : '' }}">
                                 <span class="lar la-newspaper"></span>Artículos
@@ -41,7 +41,7 @@
                                 <span class="las la-glasses"></span>Revisores
                             </a>
                         </li>
-                    @endrole 
+                    @endif
                 @elseif(session('eventoID') !== null && session('rol')=== 'Revisor'&& session('rol')!== 'Autor')
                     <li>
                         <a href="{{url(session('eventoID').'/ArticulosPendientes/'.Auth::user()->id)}}"  class="{{ Request::is(session('eventoID').'/ArticulosPendientes/'.Auth::user()->id) ? 'active' : '' }}">
@@ -56,7 +56,7 @@
                 @elseif(session('eventoID') !== null && session('rol')!== 'Revisor'&& session('rol')=== 'Autor')
                     <li>
                         <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisArticulos/')}}" class="{{ Request::is(session('eventoID').'_'.Auth::user()->id.'/MisArticulos/') ? 'active' : '' }}">
-                            <span class="lar la-newspaper"></span>Mis Articulos
+                            <span class="lar la-newspaper"></span>Mis Artículos
                         </a>
                     </li>
                     <li>
@@ -71,10 +71,10 @@
                             <span class="las la-calendar-alt"></span>Eventos
                         </a>
                     </li>
-                    @role('Administrador')
+                    @if(auth()->user()->hasRole(['Administrador']))
                         <li>
                             <a href="{{ url('areas') }}" class="{{ Request::is('areas') ? 'active' : '' }}">
-                                <span class="las la-id-card"></span>Areas
+                                <span class="las la-id-card"></span>Áreas
                             </a>
                         </li>
                         <li>
@@ -82,19 +82,19 @@
                                 <span class="las la-user"></span>Usuarios
                             </a>
                         </li>
-                    @endrole
+                    @endif
                 @endif
                     
             </ul>
-            @role('Administrador')
+            @if(auth()->user()->hasRole(['Administrador']))
                 @if(session('eventoID') !== null)
                     <div class="menu-head">
-                        <span>Administracion</span>
+                        <span>Administración</span>
                     </div>
                     <ul class="menu-list active">
                         <li>
                             <a href="{{ url('areas') }}" class="{{ Request::is('areas') ? 'active' : '' }}">
-                                <span class="las la-id-card"></span>Areas
+                                <span class="las la-id-card"></span>Áreas
                             </a>
                         </li>
                         <li>
@@ -109,7 +109,7 @@
                         </li>
                     </ul>
                 @endif
-            @endrole
+            @endif
         </div>
     </div>
 </div>

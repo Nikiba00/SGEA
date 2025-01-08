@@ -1,5 +1,5 @@
 @extends('layouts.master')
-<title>Revisores de articulos</title>
+<title>Revisores de artículos</title>
 @section('Content')
 <div class="container">
     <h1>{!! $articulo->titulo !!}</h1>
@@ -10,36 +10,36 @@
             @endforeach
         </p>
         <p>{!! $articulo->area->nombre !!}</p>
-        @if(session('rol')!== "Autor")
-            @if($articulo->estado !== "En Revision" && $articulo->estado !== "Recibido")
-                <div class="final-info" style="displey:flex; align-items:center;text-align:center">
-                    <p style="font-size:3vh;"><strong>PUNTUACION FINAL:</strong> <span id="Resultado"style="font-size:3vh;" ></span></p>
+        @if(!auth()->user()->hasRole(['Autor']))
+            @if($articulo->estado !== "En revisión" && $articulo->estado !== "Recibido")
+                <div class="final-info" style="displey:flex; align-items:center;text-align:center;margin-left: 1rem;">
+                    <p style="font-size:3vh;"><strong> PUNTUACIÓN FINAL: </strong> <span id="Resultado"style="font-size:3vh;" ></span></p>
                 </div>
             @endif
         @endif
-        <strong style="font-size:2.2vh;">{!!$articulo->estado!!}</strong>
+        <strong style="font-size:2.2vh; margin-left: 1rem;">{!!$articulo->estado!!}</strong>
     </div>
     <div class="revisores">
         <table>
             <thead>
                 <tr>
                     <th>Revisor</th>
-                    @if(session('rol')!== "Autor")
-                    <th>Puntuacion</th>
+                    @if(!auth()->user()->hasRole(['Autor']))
+                    <th>Puntuación</th>
                     @endif
-                    <th>similitud</th>
-                    <th style="width:50vw;">comentarios</th>
+                    <th>Similitud</th>
+                    <th style="width:50vw;">Comentarios</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($articulo->revisores->sortBy('orden') as $revisor)
                     <tr>
                         <td><strong >Revisor {!!$revisor->orden!!}</strong><br>
-                            @if(session('rol')!== "Autor")
+                            @if(!auth()->user()->hasRole(['Autor']))
                                 <a href="{{ url('usuarios/'.$revisor->usuario->id) }}">{!!$revisor->usuario->nombre_completo!!}</a> 
                             @endif
-                       </td>
-                       @if(session('rol')!== "Autor")
+                        </td>
+                        @if(!auth()->user()->hasRole(['Autor']))
                         <td><strong style="font-size:20px;" class = "puntuacion"> {{ $revisor->puntuacion ?? 'No definido' }}</strong></td>
                         @endif
                         <td>{{$revisor->similitud ?? 'No definido'}}</td>

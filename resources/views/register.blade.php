@@ -18,11 +18,11 @@
             </div>
             <h2 class="logo">SGEA<i class='bx bxs-calendar-event'></i></h2>
             @if(isset($usuarios))
-            <h1>existe</h1>
+            <h1>Existe</h1>
             @endif
             <div class="text-content">
-                <h2>Bienvenidos! <br> <span>Sistema de Gestion de Eventos Academicos</span> </h2>
-                <p>Este es un sistema de gestion de eventos academicos, el cual tiene como objetivo eficientar el
+                <h2>¡Bienvenidos! <br> <span>Sistema de Gestión de Eventos Académicos</span> </h2>
+                <p>Este es un sistema de gestión de eventos académicos, el cual tiene como objetivo eficientar el
                     desarrollo de eventos institucionales</p>
                 <div class="social-icons">
                     <a href="#"><i class='bx bxl-facebook-circle'></i></a>
@@ -75,7 +75,7 @@
                         <div class="input-box">
                             <span class="icon"><i class='bx bxs-phone' ></i></span>
                             <input type="text" id="telefono" name="telefono" required>
-                            <label for="telefono" class="form-label">Telefono:</label>
+                            <label for="telefono" class="form-label">Teléfono:</label>
                         </div>
 
                         <div class="input-box">
@@ -93,9 +93,9 @@
                             <input type="checkbox" id="privacy_policy" name="privacy_policy" required> Acepto el <a href="#" onclick="openModal('privacyModal')">aviso de privacidad</a>
                         </label>
                         </div>
-                        <button type="submit" class="btn btn-primary">registrarse</button>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
                     </form>
-                    <p>¿Ya tienes cuenta? <a href="{{route('login')}}">Iniciar Sesion</a></p>
+                    <p>¿Ya tienes cuenta? <a href="{{route('login')}}">Iniciar Sesión</a></p>
                 </div>
 
             </div>

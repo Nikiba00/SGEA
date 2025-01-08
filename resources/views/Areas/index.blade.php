@@ -3,8 +3,8 @@
 @section('Content')
 <div class="container">
     <div class="search-create">
-        <h1 id="titulo-h1">Areas</h1>
-        <button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i><span class="tooltip-box">Crear Area</span></button>
+        <h1 id="titulo-h1">Áreas</h1>
+        <button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i><span class="tooltip-box">Crear Área</span></button>
     </div>
 
     @if($Areas->isEmpty())
@@ -17,7 +17,7 @@
                     <tr>
                         <th><input type="checkbox" id="selectAll"></th>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Controles</th>
                     </tr>
 
@@ -64,7 +64,7 @@
 <div id="create-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Registrar Area</h2>
+        <h2>Registrar Área</h2>
         {!! Form::open(['url'=>'/areas']) !!}
             {{ Form::label('nombre', 'Nombre:') }}
             {{ Form::text('nombre', null, ['id'=>'nombre','required']) }}

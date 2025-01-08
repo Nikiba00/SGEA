@@ -22,7 +22,7 @@
                     @endforeach
                 </div>
             @else
-                <strong>Aun no hay imagenes en el sistema</strong>
+                <strong>Aun no hay imágenes en el sistema</strong>
             @endif
             <br><hr><br>
             <label for="img">Cambiar Logo:</label>

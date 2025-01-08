@@ -1,20 +1,20 @@
 @extends('layouts.master')
-<title>Revisores de articulos</title>
+<title>Revisores de artículos</title>
 @section('Content')
     <div class="container">
         <div class="search-create">
-            <h1 id="titulo-h1">Revision de Articulos</h1>
+            <h1 id="titulo-h1">Revisión de Artículos</h1>
                 <button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i><span class="tooltip-box">Asignar Revisores</span></button>
         </div>
         @if($articles->isEmpty())
-            <strong>No hay Revisores asignados a ningun articulo en este momento</strong>
+            <strong>No hay Revisores asignados a ningún artículo en este momento</strong>
         @else
             <div class="ajuste" >
                 <table id="example" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>ARTICULO</th>
-                            <th>estado</th>
+                            <th>ARTÍCULO</th>
+                            <th>Estado</th>
                             <th>Revisor 1</th>
                             <th>revisor 2</th>
                             <th>revisor 3</th>
@@ -50,12 +50,12 @@
     <div id="create-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Seleccionar Articulo</h3>
+            <h3>Seleccionar Artículo</h3>
             {!! Form::open(['url'=>'/revisores','id' => 'revisor-form']) !!}
-                {!! Form::label('area', 'Seleccionar Area:') !!}
+                {!! Form::label('area', 'Seleccionar Área:') !!}
                 {!! Form::select('area_id', $areas->pluck('nombre', 'id')->prepend('Seleccionar...', ''), null) !!}
 
-                {!! Form::label('articulo', 'Seleccionar Articulo:') !!}
+                {!! Form::label('articulo', 'Seleccionar Artículo:') !!}
                 {!! Form::select('articles',$articulos->pluck('titulo','id')->prepend('Seleccionar...', ''), null, ['required']) !!}
                 <br><hr><br>
                 <!-------------------------------------------------- REVISORES --------------------------------------------->
@@ -112,7 +112,7 @@
                     const data = await response.json();
                     if (data.error) {
                         // alert(data.error);
-                        Swal.fire({icon: 'error',title: 'Cuidado!',text: data.error});return;
+                        Swal.fire({icon: 'error',title: '¡Cuidado!',text: data.error});return;
                     } else {
                         articlesSelect.innerHTML = '<option value="">Seleccionar...</option>';
                         if (data.length > 0) {
@@ -146,7 +146,7 @@
             if (selectedArticleId) {
                 if (articlesWithRevisores.includes(selectedArticleId)) {
                     Swal.fire({
-                        title:'Cuidado!',
+                        title:'¡Cuidado!',
                         text:'Este artículo ya tiene revisores asignados',
                         icon:'warning',
                     });
@@ -184,7 +184,7 @@
             const selectedValue = selectedUsersSelect.value;
             if (!selectedValue) {
                 Swal.fire({
-                    title:'Cuidado',
+                    title:'¡Cuidado!',
                     text:'Primero, seleccione un usuario de la lista desplegable.',
                     icon:'error',
                 });
@@ -217,7 +217,7 @@
                 event.preventDefault();
                 Swal.fire({
                     title:'Advertencia',
-                    text:'Debe seleccionar almenos un usuario.',
+                    text:'Debe seleccionar al menos un usuario.',
                     icon:'error',
                 });
                 return;
@@ -262,6 +262,3 @@
         updateRevisorsList();
     });
 </script>
-
-
-

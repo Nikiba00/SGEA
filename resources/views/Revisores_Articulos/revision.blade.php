@@ -1,5 +1,5 @@
 @extends('layouts.master')
-<title>Revision de Articulo</title>
+<title>Revisión de Artículo</title>
 @section('Content')
     <div class="container">
         <h1>{!! $articulo->titulo !!}</h1><br>
@@ -15,7 +15,7 @@
                 @endforeach
             </ul>
         </p>
-        <p><strong>Area: </strong>{!! $articulo->area->nombre !!}</p>
+        <p><strong>Área: </strong>{!! $articulo->area->nombre !!}</p>
         <p><strong>Correspondencia: </strong><a href="mailto:{!! $articulo->autor_correspondencia->email!!}"> {!! $articulo->autor_correspondencia->email!!} </a>({!! $articulo->autor_correspondencia->usuario->nombre_completo!!})</p>
         <strong>Resumen:</strong>
         <div class="resumen">
@@ -37,7 +37,7 @@
         <br><hr><br>
         <div class="revision-container">
             <h2>INSTRUCCIONES</h2>
-            <span>Seleccione una opcion para cada una de las siguientes preguntas segun su consideracion.</span>
+            <span>Seleccione una opción para cada una de las siguientes preguntas segun su consideración.</span>
             {!! Form::open(['method' => 'PUT', 'url' => 'Calificar_'.$articulo->id.'/', 'enctype' => 'multipart/form-data','id' => 'revision-form']) !!}
                 <div class="evaluate">
                     @foreach ($parameters['Questions'] as $indexq => $question)
@@ -64,15 +64,16 @@
                 {{ Form::hidden('puntuacion', null) }}
                 {{ Form::hidden('id_usuario', auth()->user()->id) }}
                 
-                {!! Form::button('Finalizar Revision', ['type' => 'submit', 'style' => 'background-color:#1a2d51;color:#fff;', 'id' => 'EndRev-btn']) !!}
+                {!! Form::button('Finalizar Revisión', ['type' => 'submit', 'style' => 'background-color:#1a2d51;color:#fff;', 'id' => 'EndRev-btn']) !!}
             {!! Form::close() !!}
-            <a href="{{ url()->previous() }}"><button> Cancelar Revision</button></a>
+            <a href="{{ url()->previous() }}"><button> Cancelar Revisión</button></a>
         </div>
     </div>
 @endsection
 <script src="{{asset('SGEA/public/js/script-revision.js')}}"></script>
 
 <script>
+    /*CÓDIGO ORIGINAL
     document.addEventListener('DOMContentLoaded', function() {
         const questions = document.querySelectorAll('.question');
         const maxToApprove = {!! json_encode($parameters['MaxToApprove']) !!}; 
@@ -81,6 +82,9 @@
 
         const maxScorePerQuestion = maxToApprove / numQuestions;
         const scorePerOption = maxScorePerQuestion / (numOptions - 1); 
+        //let totalScore = 0; //Acumulador de puntuación total
+
+        //const puntuacionField = document.querySelector('input[name="puntuacion"]');//Campo oculto para enviar la puntuación al servidor
 
         questions.forEach(question => {
             const radios = question.querySelectorAll('input[type="radio"]');
@@ -111,6 +115,41 @@
                 });
             });
         });
-       
+    });*/
+    document.addEventListener('DOMContentLoaded', function() {
+        const questions = document.querySelectorAll('.question');
+
+        const maxToApprove = {!! json_encode($parameters['MaxToApprove']) !!}; 
+        const numQuestions = {!! count($parameters['Questions']) !!}; 
+        const numOptions = {!! count($parameters['OptionAnswers']) !!}; 
+
+        const maxScorePerQuestion = maxToApprove / numQuestions;
+        const scorePerOption = maxScorePerQuestion / (numOptions - 1); 
+        let totalScore = 0; 
+
+        const puntuacionField = document.querySelector('input[name="puntuacion"]');
+
+        questions.forEach(question => {
+            const radios = question.querySelectorAll('input[type="radio"]');
+
+            radios.forEach((radio, index) => {
+                radio.value = index * scorePerOption;
+            });
+
+            radios.forEach(radio => {
+                radio.addEventListener('click', function() {
+                    if (this.checked) {
+                        totalScore = Array.from(document.querySelectorAll('input[type="radio"]:checked'))
+                            .reduce((sum, input) => sum + parseInt(input.value), 0);
+
+                        puntuacionField.value = totalScore;
+
+                        radios.forEach(r => r.disabled = (r !== this));
+                    } else {
+                        radios.forEach(r => r.disabled = false);
+                    }
+                });
+            });
+        });
     });
 </script>

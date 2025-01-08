@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30b0a9e9d1b68b2e959197295ac6af93",
+    "content-hash": "1c0b41265b184b89f187f09675f6e329",
     "packages": [
         {
             "name": "brick/math",
@@ -1157,6 +1157,54 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "jaspersoft/rest-client",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jaspersoft/jrs-rest-php-client.git",
+                "reference": "017f081101b8f8c1a7ba15b65a89694d8c53bd2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jaspersoft/jrs-rest-php-client/zipball/017f081101b8f8c1a7ba15b65a89694d8c53bd2c",
+                "reference": "017f081101b8f8c1a7ba15b65a89694d8c53bd2c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Jaspersoft": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Jaspersoft",
+                    "email": "code@jaspersoft.com"
+                }
+            ],
+            "description": "A client for the JasperReports Server REST API",
+            "homepage": "http://github.com/Jaspersoft/jrs-rest-php-client",
+            "keywords": [
+                "jasper-reports",
+                "jasperreports",
+                "jaspersoft",
+                "reporting"
+            ],
+            "support": {
+                "issues": "https://github.com/Jaspersoft/jrs-rest-php-client/issues",
+                "source": "https://github.com/Jaspersoft/jrs-rest-php-client/tree/master"
+            },
+            "time": "2014-05-27T21:10:25+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3598,6 +3646,44 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "simitgroup/phpjasperxml",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SIMITGROUP/phpjasperxml.git",
+                "reference": "1ca5d3aff477b903308ca773580ad07094917e79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SIMITGROUP/phpjasperxml/zipball/1ca5d3aff477b903308ca773580ad07094917e79",
+                "reference": "1ca5d3aff477b903308ca773580ad07094917e79",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KS Tan",
+                    "role": "Developper"
+                }
+            ],
+            "description": "PHP WYSIWYG Web/PDF Report Library",
+            "homepage": "https://github.com/SIMITGROUP/phpjasperxml",
+            "support": {
+                "issues": "https://github.com/SIMITGROUP/phpjasperxml/issues",
+                "source": "https://github.com/SIMITGROUP/phpjasperxml/tree/master"
+            },
+            "time": "2019-01-29T01:26:14+00:00"
         },
         {
             "name": "smalot/pdfparser",

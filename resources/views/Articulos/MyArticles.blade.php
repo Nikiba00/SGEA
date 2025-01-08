@@ -18,9 +18,9 @@
                 <thead>            
                     <tr>
                         <th><input type="checkbox" id="selectAll"></th>
-                        <th>TITULO</th>
+                        <th>TÍTULO</th>
                         <th>AUTORES</th>
-                        <th>Area</th>
+                        <th>Área</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -44,7 +44,8 @@
                                     @endforeach
                                 </ul>
                             </td>
-                            @role(['Administrador','Organizador'])
+                            <!--Antes en lugar de @ if se usaba @ role ( ['Admin','Organizador'])-->
+                            @if(auth()->user()->hasRole(['Administrador', 'Comite']))
                             <td>
                                 <a href="mailto:{!!$art->autor_correspondencia->email!!}" style="text-decoration:underline;">{!!$art->autor_correspondencia->email!!}</a>
                             </td>
@@ -72,7 +73,7 @@
                                 <a href="{{url('articulos/'.$art->id)}}" onclick="event.preventDefault(); 
                                         Swal.fire({
                                             title: '¿Estás seguro?',
-                                            text: '¿Realmente desea eliminar este articulo?',
+                                            text: '¿Realmente desea eliminar este artículo?',
                                             icon: 'warning',
                                             showCancelButton: true,
                                             confirmButtonText: 'Sí, eliminar',
@@ -103,13 +104,13 @@
             <span class="close">&times;</span>
             <h2>Registro de Artículo</h2>
             {!! Form::open(['url' => '/articulos', 'enctype' => 'multipart/form-data', 'id' => 'article-form']) !!}
-                {!! Form::label('title', 'Titulo del Articulo:') !!}
+                {!! Form::label('title', 'Título del Artículo:') !!}
                 <input type="text" id="titulo" name="titulo" required>
                 
-                {!! Form::label('desc', 'Resumen del Articulo:') !!}
+                {!! Form::label('desc', 'Resumen del Artículo:') !!}
                 <textarea rows="4" cols="50" id="description" name="resumen"></textarea>
                 
-                {!! Form::label('are', 'Area del Articulo:') !!}
+                {!! Form::label('are', 'Área del Artículo:') !!}
                 <select name="area_id" required>
                     <option value="">Seleccionar...</option>
                     @foreach ($Areas as $area)
@@ -136,7 +137,7 @@
                 {!! Form::label('label_instruction', 'Seleccionar Autor:') !!}
                 <select name="autor" id="selected-author">
                     @if($Autores=== null)
-                        <option value="">Aun no se han registrado autores</option>
+                        <option value="">Aún no se han registrado autores</option>
                     @else
                         <option value="">Seleccionar...</option>
                         @if(Auth::user()->id!==1)
@@ -169,7 +170,7 @@
                 <input type="hidden" name="id" id="id">
                 <label for="curp">CURP:</label>
                 <input type="text" id="curp" name="curp" required>
-                <span id="curp-info" style="color:green; display:none;">Se verifico la CURP, favor de llenar todos los campos</span>
+                <span id="curp-info" style="color:green; display:none;">Se verificó la CURP, favor de llenar todos los campos</span>
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required>
                 <label for="ap_paterno">Apellido Paterno:</label>

@@ -16,7 +16,7 @@
                 </div>
                 <div class="card">
                     <h1>Ayuda con la Contraseña</h1>
-                    <p>Escribe la dirección de correo electrónico asociado a tu cuenta. Si existe se enviara un codigo de verificacion</p>
+                    <p>Escribe la dirección de correo electrónico asociado a tu cuenta. Si existe se enviará un código de verificación</p>
                     <form id="login-form" method="POST" action="{{ route('password.reset') }}">
                     @csrf
                         <label for="email">Correo:</label>

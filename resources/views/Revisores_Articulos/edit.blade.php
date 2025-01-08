@@ -52,8 +52,8 @@
                 // alert("Este usuario ya es Revisor en este articulo");
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Cuidado!',
-                    text: 'Este usuario ya es Revisor en este articulo'
+                    title: '¡Cuidado!',
+                    text: 'Este usuario ya es Revisor en este artículo'
                 });
                 // Regresamos al valor anterior
                 this.value = previousValue;
@@ -72,7 +72,7 @@
                 // alert("Debe seleccionarse al menos un Revisor");
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Cuidado!',
+                    title: '¡Cuidado!',
                     text: 'Debe seleccionarse al menos un Revisor'
                 });
                 event.preventDefault(); // Evitamos el envío del formulario

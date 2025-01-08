@@ -1,5 +1,5 @@
 @extends('layouts.master')
-<title>Informacion</title>
+<title>Información</title>
 
 @section('Content')
 <div class="container">
@@ -20,9 +20,9 @@
 
                     </ul>
                     
-                    <p class="descripcion"><strong>TELEFONO </strong>(<a href="tel:+52 1 {!!$autor->usuario->telefono!!}">{!!$autor->usuario->telefono!!}</a>)</p>
+                    <p class="descripcion"><strong>TELÉFONO </strong>(<a href="tel:+52 1 {!!$autor->usuario->telefono!!}">{!!$autor->usuario->telefono!!}</a>)</p>
                     @if(count($articulos) > 0)
-                        <strong class="descripcion" >ARTICULOS</strong>
+                        <strong class="descripcion" >ARTÍCULOS</strong>
                         <ul style="margin-left: 1vw;">
                             @foreach ($articulos as $art)
                                 <li>

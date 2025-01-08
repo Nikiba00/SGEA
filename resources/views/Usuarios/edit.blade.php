@@ -32,7 +32,7 @@
             {!! Form::label('password', 'Nueva Contraseña:') !!}
             {!! Form::text ('password',null)!!}
 
-        @role('Administrador')
+        @if(auth()->user()->hasRole(['Administrador']))
             <h3>Seleccionar Rol:</h3>
             @foreach($roles as $role)
             <div class="">
@@ -42,7 +42,7 @@
                 </label>
             </div>
             @endforeach
-        @endrole
+        @endif
         <button type="submit">Guardar</button>
         {!!Form::close()!!}   
         <a href="{{ url()->previous() }}"><button>Cancelar</button></a> 

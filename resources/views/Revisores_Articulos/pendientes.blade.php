@@ -1,19 +1,19 @@
 @extends('layouts.master')
-<title>Articulos por Revisar</title>
+<title>Artículos por Revisar</title>
 @section('Content')
     <div class="container">
         <div class="search-create">
-            <h1 id="titulo-h1">Articulos por Revisar</h1>
+            <h1 id="titulo-h1">Artículos por Revisar</h1>
         </div>
         @if($articulos->isEmpty())
-            <strong>No Tiene articulos Pendientes</strong>
+            <strong>No Tiene artículos Pendientes</strong>
         @else
             <table id="example" class="display nowrap" style="width:100%">
                 <thead>
-                    <th>Articulo</th>
+                    <th>Artículo</th>
                     <th>Autores</th>
                     <th>Correspondencia</th>
-                    <th>area</th>
+                    <th>Área</th>
                     <th>Controles</th>
                 </thead>
                 <tbody>
@@ -35,7 +35,7 @@
                         </td>
                         <td>{{$art->area->nombre}}</td>
                         <td>
-                            <a href="{{url(session('eventoID').'_'.$art->id.'/revision/')}}"><button>Iniciar Revison</button></a>
+                            <a href="{{url(session('eventoID').'_'.$art->id.'/revision/')}}"><button>Iniciar Revisión</button></a>
                         </td>
                     </tr>
                     @endforeach

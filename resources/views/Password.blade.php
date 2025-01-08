@@ -17,7 +17,7 @@
       </div>
       <div class="card">
         <h1>ESTABLECER CONTRASEÑA</h1>
-        <p>Hola <strong>{!!$user->nombre!!}</strong> porfavor introduce una contraseña nueva</p>
+        <p>Hola <strong>{!!$user->nombre!!}</strong> por favor introduce una contraseña nueva</p>
         <form method="POST" id="password-form" action="{{ route('Password') }}">
             @csrf
             <input type="hidden" id="user-identifier" name="user-id" value="{!!$user->id!!}">

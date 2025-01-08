@@ -38,7 +38,7 @@ return new class extends Migration
             FOR EACH ROW
             EXECUTE PROCEDURE set_orden();
         ');
-        //actualizar estado del articulo (En revision)
+        //actualizar estado del articulo (En revisión)
         DB::unprepared('
             CREATE OR REPLACE FUNCTION articulo_estado()
             RETURNS TRIGGER AS $BODY$
@@ -50,7 +50,7 @@ return new class extends Migration
             evento:= NEW.evento_id;
 
             UPDATE ARTICULOS
-            SET estado = \'En revision\'
+            SET estado = \'En revisión\'
             WHERE ARTICULOS.evento_id = evento AND ARTICULOS.id = articulo;
 
             RETURN NEW;

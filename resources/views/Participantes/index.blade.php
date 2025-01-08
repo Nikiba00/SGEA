@@ -1,77 +1,76 @@
 @extends('layouts.master')
 <title>Participantes</title>
-
 @section('Content')
 <div class="container">
-    
     <div class="search-create">
         <h1 id="titulo-h1">Participantes del {!!$evento->acronimo!!} {!!$evento->edicion!!}</h1>
-        <button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i><span class="tooltip-box">Agregar Participante</span></button>
+        <button class="tooltip" id="create-btn"><i class="las la-plus-circle la-2x"></i>
+            <span class="tooltip-box">Agregar Participante</span>
+        </button>
     </div>
 
-    @if(count($part)===0)
+    @if(count($part) === 0)
         <strong>No hay datos</strong>
     @else
-    <div class="ajuste" >
-        <button class="tooltip" id="deleteSelected"><i class="las la-trash-alt la-2x"></i><span class="tooltip-box">Eliminar Seleccionados</span></button>
-            <table id="example" class="display nowrap" style="width:100%">
+        <div class="ajuste">
+            <button class="tooltip" id="deleteSelected">
+                <i class="las la-trash-alt la-2x"></i>
+                <span class="tooltip-box">Eliminar Seleccionados</span>
+            </button>
+            <table id="example" class="display  responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
-                    <th><input type="checkbox" id="selectAll"></th>
+                        <th><input type="checkbox" id="selectAll"></th>
                         <th>NOMBRE</th>
                         <th>CORREO</th>
                         <th>ROL</th>
-                        @role(['Administrador','Organizador'])
+                        @if(auth()->user()->hasRole(['Administrador', 'Comite']))
                             <th>Controles</th>
-                        @endrole
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($part as $usu)
+                @foreach ($part as $usu)
                         <tr>
-                        <td><input type="checkbox" class="selectRow" data-id="{{ $usu->usuario->id }}"></td>
-                            <td><a href="{{url('usuarios/'.$usu->usuario->id)}}" style="color=#000;">{!!$usu->usuario->nombre_completo!!}</a></td>
+                            <td><input type="checkbox" class="selectRow" data-id="{{ $usu->usuario->id }}"></td>
+                            <td><a href="{{url('usuarios/' . $usu->usuario->id)}}"style="color=#000;">{!!$usu->usuario->nombre_completo!!}</a></td>
                             <td><a href="mailto:{!!$usu->usuario->email!!}">{!!$usu->usuario->email!!}</a></td>
                             <td>
-                                @if($usu->rol===null)
+                                @if($usu->usuario->getRoleNames()->isEmpty())
                                     No asignado
                                 @else
-                                    <strong>{!!$usu->rol!!}</strong>
+                                    <strong>{{ $usu->usuario->getRoleNames()->join(', ') }}</strong>
                                 @endif
                             </td>
-                            @role(['Administrador','Organizador'])
-                            <td>
-                                <a href="{{ url('usuarios/'.$usu->usuario->id) }}"><i class="las la-info-circle la-2x"></i></a>
-                                {!! Form::open(['route' => ['participantes.destroy', $evento->id, $usu->usuario->id], 'method' => 'delete', 'style' => 'display:inline-block;']) !!}
-                                    
-                                    <button type="button" 
-                                        onclick="
-                                            Swal.fire({
-                                                title: '¿Estás seguro?',
-                                                text: '¿Estás seguro de que deseas expulsar a este participante?',
-                                                icon: 'warning',
-                                                showCancelButton: true,
-                                                confirmButtonText: 'Sí, expulsar',
-                                                cancelButtonText: 'No, cancelar'
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    this.form.submit();
-                                                }
-                                            });
-                                        " 
-                                        style="border:none; background:none;">
+                            @if(auth()->user()->hasRole(['Administrador', 'Comite']))
+                                <td>
+                                    <a href="{{ url('usuarios/' . $usu->usuario->id) }}"><i class="las la-info-circle la-2x"></i></a>
+                                    {!! Form::open(['route' => ['participantes.destroy', $evento->id, $usu->usuario->id], 'method' => 'delete', 'style' => 'display:inline-block;']) !!}
+                                    <button type="button" onclick="Swal.fire({
+                                                    title: '¿Estás seguro?',
+                                                    text: '¿Estás seguro de que deseas expulsar a este participante?',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Sí, expulsar',
+                                                    cancelButtonText: 'No, cancelar'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        this.form.submit();
+                                                    }
+                                                });
+                                                " style="border:none; background:none;">
                                         <i class="las la-trash la-2x" style="color:red;"></i>
                                     </button>
-                                {!! Form::close() !!}
-
-                            </td>
-                            @endrole
+                                    {!! Form::close() !!}
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        
+        </div>
     @endif
+
 </div>
 
 <div id="create-modal" class="modal">
@@ -82,10 +81,9 @@
         {!! Form::open(['route' => 'participantes.store', 'id' => 'participante-form']) !!}
         <!-- PARA MANDAR EL ID DEL EVENTO -->
         {!! Form::hidden('evento_id', '', ['id' => 'evento-id']) !!}
-            <label for="participante-name">Seleccionar Usuario:</label>
-            {!! Form::select('usuario_id', $usuarios->pluck('nombre_completo', 'id'), null, ['required' => 'required']) !!}
-
-            <button type="submit">Guardar</button>
+        <label for="participante-name">Seleccionar Usuario:</label>
+        {!! Form::select('usuario_id', $usuarios->pluck('nombre_completo', 'id'), null, ['required' => 'required']) !!}
+        <button type="submit">Guardar</button>
         {!!Form::close()!!}
     </div>
 </div>
@@ -93,84 +91,84 @@
 @endsection
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const deleteSelected = document.getElementById('deleteSelected');
-    const selectAll = document.getElementById('selectAll');
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteSelected = document.getElementById('deleteSelected');
+        const selectAll = document.getElementById('selectAll');
 
-    if (deleteSelected) {
-        deleteSelected.addEventListener('click', function() {
-            const selectedCheckboxes = document.querySelectorAll('.selectRow:checked');
-            let userIds = [];
-            selectedCheckboxes.forEach(function(checkbox) {
-                let userId = checkbox.getAttribute('data-id');
-                userIds.push(userId);
-            });
-
-            if (userIds.length > 0) {
-                Swal.fire({
-                    title: '¿Está seguro?',
-                    text: '¡No podrá revertir esto!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'No, cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        fetch('{{ route('participantes.deleteMultiple', ['eventoId' => $evento->id]) }}', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            },
-                            body: JSON.stringify({ userIds: userIds })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Éxito',
-                                    text: 'Usuarios expulsados del evento correctamente.'
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: 'Error: ' + data.error
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Ha ocurrido un error al expulsar a los usuarios.'
-                            });
-                        });
-                    }
+        if (deleteSelected) {
+            deleteSelected.addEventListener('click', function () {
+                const selectedCheckboxes = document.querySelectorAll('.selectRow:checked');
+                let userIds = [];
+                selectedCheckboxes.forEach(function (checkbox) {
+                    let userId = checkbox.getAttribute('data-id');
+                    userIds.push(userId);
                 });
-            } else {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Información',
-                    text: 'No se seleccionaron usuarios.'
-                });
-            }
-        });
-    }
 
-    if (selectAll) {
-        selectAll.addEventListener('change', function() {
-            const checkboxes = document.querySelectorAll('.selectRow');
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = selectAll.checked;
+                if (userIds.length > 0) {
+                    Swal.fire({
+                        title: '¿Está seguro?',
+                        text: '¡No podrá revertir esto!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'No, cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch('{{ route('participantes.deleteMultiple', ['eventoId' => $evento->id]) }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                },
+                                body: JSON.stringify({ userIds: userIds })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Éxito',
+                                            text: 'Usuarios expulsados del evento correctamente.'
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: 'Error: ' + data.error
+                                        });
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Ha ocurrido un error al expulsar a los usuarios.'
+                                    });
+                                });
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Información',
+                        text: 'No se seleccionaron usuarios.'
+                    });
+                }
             });
-        });
-    }
-});
+        }
+
+        if (selectAll) {
+            selectAll.addEventListener('change', function () {
+                const checkboxes = document.querySelectorAll('.selectRow');
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.checked = selectAll.checked;
+                });
+            });
+        }
+    });
 </script>
 
 <!-- PARA OBTENER EL ID DEL EVENTO Y FUNCIONE EL AGREGAR PARTICIPANTES -->
@@ -185,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputEventoId = document.getElementById('evento-id');
         if (inputEventoId) {
             inputEventoId.value = evento_id; // Establecer el valor del campo oculto
-            console.log("Evento ID capturado y asignado:", evento_id); // Verificar en consola
         }
     });
 </script>

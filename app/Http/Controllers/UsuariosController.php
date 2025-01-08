@@ -103,6 +103,7 @@ class usuariosController extends Controller
 
     public function update(Request $request, string $id)
     {
+        //dd($request->all());
         $usuario=usuarios::find($id);
         $NuevosDatos = $request->all();
         if($request->has('newPhoto')){
@@ -241,6 +242,4 @@ class usuariosController extends Controller
             return response()->json(['status' => 'not_exists']);
         }
     }
-
-    
 }

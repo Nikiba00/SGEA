@@ -1,5 +1,5 @@
 @extends('layouts.master')
-    <title>Parametros del Evento</title>
+    <title>Parámetros del Evento</title>
 @section('Content')
     <div class="container">
         <h1>Configuración del {{ $parameters['Evento'] }}</h1>
@@ -7,11 +7,11 @@
             {!! Form::open(['method' => 'POST', 'url' => session('eventoID').'/update-parameters', 'id' => 'parameter-form']) !!}
                 <div class="puntuation">
                     <div class="max-punt">
-                        <h3>{!! Form::label('max_to_approve', 'Puntuación Maxima para aprobar un artículo:') !!}</h3>
+                        <h3>{!! Form::label('max_to_approve', 'Puntuación Máxima para aprobar un artículo:') !!}</h3>
                         {!! Form::number('max_to_approve', $parameters['MaxToApprove'], ['id'=>'max_to_approve','required']) !!}
                     </div>
                     <div class="min-punt">
-                        <h3>{!! Form::label('min_to_approve', 'Puntuación Minima para aprobar un artículo:') !!}</h3>
+                        <h3>{!! Form::label('min_to_approve', 'Puntuación Mínima para aprobar un artículo:') !!}</h3>
                         {!! Form::number('min_to_approve', $parameters['MinToApprove'], ['id'=>'min_to_approve','required']) !!}
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     @endforeach
                 </div>
                 <div class="addQuestion">
-                    {!! Form::button('Agregar Opcion', ['type' => 'button', 'id' => 'add-answer-btn']) !!}
+                    {!! Form::button('Agregar Opción', ['type' => 'button', 'id' => 'add-answer-btn']) !!}
                 </div>  
                 {!! Form::button('Guardar Configuración', ['type' => 'submit', 'id' => 'save-btn']) !!}
             {!! Form::close() !!}

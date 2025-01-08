@@ -59,7 +59,8 @@
                 return column === false;
             });
 
-            if (!isResponsive && $('#example thead tr').length < 2) {
+            /*if (!isResponsive && $('#example thead tr').length < 2) {//< 2
+                $('#example thead tr:gt(0)').remove();
                 $('#example thead tr').clone(true).appendTo('#example thead');
 
                 $('#example thead tr:eq(1) th').each(function(i) {
@@ -76,7 +77,7 @@
                         });
                     }
                 });
-            }
+            }*/
         });
 
         //eliminacion masiva 

@@ -15,10 +15,10 @@
                     <th>NOMBRE</th>
                     <th>EMAIL</th>
                     <th>CURP</th>
-                    @role(['Administrador','Organizador'])
+                    @if(auth()->user()->hasRole(['Administrador','Comite']))
                     <th>Estado</th>
                     <th>Controles</th>
-                    @endrole
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@
                         <a href="mailto:{!!$usu->email!!}">{!!$usu->email!!}</a>
                     </td>
                     <td>{!!$usu->curp!!}</td>
-                    @role(['Administrador','Organizador'])
+                    @if(auth()->user()->hasRole(['Administrador','Comite']))
                     <td>{!!$usu->estado!!}</td>
                     <td>
                         <a href="{!! 'usuarios/'.$usu->id !!}"><i class="las la-info-circle la-2x"></i></a>
@@ -63,7 +63,7 @@
                             @csrf
                         </form>
                     </td>
-                    @endrole
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
@@ -98,7 +98,7 @@
             {{ Form::label('usuario-pass', 'Contraseña:') }}
             {!! Form::password('password', null, ['id'=>'usuario-password','required']) !!}
 
-            {{ Form::label('usuario-phone', 'Telefono:') }}
+            {{ Form::label('usuario-phone', 'Teléfono:') }}
             {!! Form::tel('telefono', null, ['id'=>'telefono','required']) !!}
 
             <h3>Seleccionar Rol:</h3>

@@ -4,7 +4,7 @@
 @section('Content')
 <div class="container">
 
-    <h1>MODIFICAR AREA</h1>
+    <h1>MODIFICAR ÁREA</h1>
     {!! Form::open(['method'=>'PATCH','url'=>'/areas/'.$area->id]) !!}
         <label for="area-name">Nombre:</label>
         <br>

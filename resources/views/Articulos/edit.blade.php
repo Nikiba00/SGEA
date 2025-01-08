@@ -2,7 +2,7 @@
     <title>Modificar Datos</title>
 @section('Content')
     <div class="container">
-        <h1>MODIFICAR ARTICULO</h1>
+        <h1>MODIFICAR ARTÍCULO</h1>
 
         {!! Form::open(['method'=>'PUT','url'=>$articulo->evento_id.'/articulo/'.$articulo->id, 'files' => true, 'id' => 'edit-form']) !!}
             <strong> {!! Form::label('title', 'Titulo del Articulo:') !!}</strong>
@@ -11,7 +11,7 @@
             <strong> {!! Form::label('desc', 'Resumen del Articulo:') !!}</strong>
             <textarea rows="4" cols="50" id="description" name="resumen" >{!!$articulo->resumen!!}</textarea>
             
-            <label for="area"><strong>Area : </strong>
+            <label for="area"><strong>Área : </strong>
                 <select name="area_id" require>
                     @foreach ($Areas as $area)
                         <option value="{{ $area->id }}"{{ $area->id == $articulo->area_id ?'selected':''}}>
@@ -73,7 +73,7 @@
                 <input type="hidden" name="id" id="id">
                 <label for="curp">CURP:</label>
                 <input type="text" id="curp" name="curp" required>
-                <span id="curp-info" style="color:green; display:none;">Se verifico la CURP, favor de llenar todos los campos</span>
+                <span id="curp-info" style="color:green; display:none;">Se verificó la CURP, favor de llenar todos los campos</span>
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required>
                 <label for="ap_paterno">Apellido Paterno:</label>

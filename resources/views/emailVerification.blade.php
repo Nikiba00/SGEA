@@ -39,12 +39,12 @@
             <input type="hidden" id="user-identifier" name="user-id" value="{!!$user->id!!}">
             <input type="hidden" id="codee" name="codigo" value="{!!$codigo!!}">
 
-            <label for=""><strong>Introducir Codigo</strong></label><br>
+            <label for=""><strong>Introducir Código</strong></label><br>
             <input type="number" name="input-usuario" id="" placeHolder="ej: 1234">
             <br><br>
             <button type="submit" class="btn">Confirmar</button>
         </form>
-        <a href="javascript:void(0);" id="resend-code-link">Reenviar Codigo</a>
+        <a href="javascript:void(0);" id="resend-code-link">Reenviar Código</a>
     </div>
 </div>
 
