@@ -22,12 +22,12 @@
                         <a href="" id="migrate-button" data-evento-id="{{ $evento->id }}"><i class="las la-rocket la-2x"></i></a>
                         <a href="{{ route('evento.cancel', session('eventoID')) }}"><i class="las la-times la-2x"></i></a>
                         <a href="javascript:void(0);" 
-                            onclick="generarReporte('{{ $evento->id }}');" 
+                            onclick="event.preventDefault(); generarReporteEvento('{{ $evento->id }}');" 
                             class="tooltip-container">
                             <i class="las la-file-alt la-2x"></i>
                             <span class="tooltip-text">Generar reporte del evento</span>
                         </a>
-                        <a href="{!! url($evento)!!}"
+                        <!--<a href="{!! url($evento)!!}"
                             class="tooltip-container">
                             <i class="las la-eye la-2x"></i>
                             <span class="tooltip-text">Vista previa del reporte</span>
@@ -36,6 +36,10 @@
                             class="tooltip-container">
                             <i class="las la-download la-2x"></i>
                             <span class="tooltip-text">Descargar reporte</span>
+                        </a>-->
+                        <a href="{{ url(session('eventoID').'/Agenda/') }}" class="tooltip-container">
+                            <i class="las la-calendar la-2x"></i>
+                            <span class="tooltip-text">Agenda del evento (itinerario)</span>
                         </a>
                     @endif
                 </div>
@@ -43,7 +47,7 @@
             </div>
         </div>
         <div class="links">
-            @if(auth()->user()->hasRole(['Administrador']))
+            @if(auth()->user()->hasRole(['Administrador', 'Comite']))
                 <a href="{{ route('articulos.evento.index', ['eventoId' => $evento->id]) }}" class="link-card">
                     <i class="lar la-newspaper la-3x"></i>Artículos
                 </a>
@@ -55,10 +59,6 @@
                 </a>
                 <a href="{{ route('revisores.index', ['eventoId' => $evento->id]) }}" class="link-card">
                     <i class="las la-glasses la-3x"></i>Revisores
-                </a>
-                <!-- ADICIÓN DEL BOTÓN PARA GENERAR REPORTE - FALTA INCLUÍR LA NUEVA VISTA -->
-                <a href="{{url(session('eventoID').'_'.Auth::user()->id.'/MisReportes/')}}" class="link-card">
-                    <i class="las la-newspaper la-3x"></i> Agenda del evento
                 </a>
             @endif
             <!-- CAMBIOS PARA PODER VER LOS ARTÍCULOS COMO AUTOR Y/O REVISOR 
@@ -202,6 +202,46 @@
 
 
     });
+</script>
+<script>
+    function generarReporteEvento(eventoId){
+        Swal.fire({
+            title: 'Generando reporte...',
+            text: 'Por favor espere mientras procesamos su solicitud',
+            icon: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false
+        });
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `{{ url('') }}/eventos/${eventoId}/reporteEvento`;
+        form.innerHTML = `<input type="hidden" name="_token" value="{{ csrf_token() }}">`;
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    function generarAgenda(eventoId){
+
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if (session('success'))
+        Swal.fire({
+            title: 'Archivo generado',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+    @elseif (session('error'))
+        Swal.fire({
+            title: 'Error',
+            text: "{{ session('error') }}",
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    @endif
 </script>
 
 <style>

@@ -44,8 +44,8 @@ class LoginController extends Controller
             $mail->CharSet = 'UTF-8';
             $subject =  "Código de verificación";
             $message = "Hola $user->nombre,\n\n
-                        Tu codigo de verificacion es: <strong>$codigo</strong>\n\n
-                        No compartas este codigo con nadie.\n\n
+                        Tu código de verificación es: <strong>$codigo</strong>\n\n
+                        No compartas este código con nadie.\n\n
                         Atentamente\n
                         <strong>SGEA</strong>";
 
@@ -59,7 +59,7 @@ class LoginController extends Controller
                 //NO SE ENVIO EL EMAIL
                 return redirect()->back()->with('error', 'Error en el envio: '.$mail->ErrorInfo);
             } else{
-                echo("<script>console.log('Se envio el correo a $user->email');</script>");
+                echo("<script>console.log('Se envió el correo a $user->email');</script>");
                 return true;
             }
         } catch (Exception $e) {

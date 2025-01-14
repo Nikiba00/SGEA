@@ -71,5 +71,21 @@ class RolesSeeder extends Seeder
         Permission::firstOrCreate(['name'=>'reportes.edit'])->syncRoles([$rol1,$rol2,$rol3,$rol5]);
         Permission::firstOrCreate(['name'=>'reportes.read'])->syncRoles([$rol1,$rol2,$rol3,$rol4,$rol5]);
         Permission::firstOrCreate(['name'=>'reportes.destroy'])->syncRoles([$rol1,$rol2,$rol3,$rol5]);
+        Permission::firstOrCreate(['name'=>'reportes.download'])->syncRoles([$rol1,$rol2,$rol3]);
+
+        Permission::firstOrCreate(['name'=>'agendas.index'])->syncRoles([$rol1,$rol2]);
+        Permission::firstOrCreate(['name'=>'agendas.create'])->syncRoles([$rol1,$rol2]);
+        Permission::firstOrCreate(['name'=>'agendas.edit'])->syncRoles([$rol1,$rol2]);
+        Permission::firstOrCreate(['name'=>'agendas.read'])->syncRoles([$rol1,$rol2]);
+        Permission::firstOrCreate(['name'=>'agendas.destroy'])->syncRoles([$rol1,$rol2]);
+        Permission::firstOrCreate(['name'=>'agendas.download'])->syncRoles([$rol1,$rol2]);
+
+        Permission::firstOrCreate(['name'=>'cesionDerechos.create'])->syncRoles([$rol3]);
+        Permission::firstOrCreate(['name'=>'cesionDerechos.download'])->syncRoles([$rol3]);
+
+        Permission::firstOrCreate(['name'=>'pagos.create'])->syncRoles([$rol2,$rol3,$rol4]);
+        Permission::firstOrCreate(['name'=>'pagos.download'])->syncRoles([$rol2,$rol3,$rol4]);
+
+
     }
 }

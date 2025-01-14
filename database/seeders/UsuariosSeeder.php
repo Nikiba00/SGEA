@@ -64,7 +64,7 @@ class UsuariosSeeder extends Seeder
             'telefono'=>'7292451298',
             'estado'=>'alta,registrado'
         ]);
-        $user3 = usuarios::updateOrCreate(//REVISOR
+        $user3 = usuarios::updateOrCreate(//AUTOR - REVISOR
             ['curp'=>'000000000000000000'],
             [
             'foto' => 'DefaultM.jpg',
@@ -72,12 +72,12 @@ class UsuariosSeeder extends Seeder
             'ap_paterno'=>'Reyes',
             'ap_materno'=>'Nava',
             
-            'email'=>'adriana.reyes@tesjo.edu.mx',
+            'email'=>'tagejah114@suggets.com',
             'password'=> Hash::make('123'),
             'telefono'=>'0000000000',
             'estado'=>'alta,registrado'
         ]);
-        $user4 = usuarios::updateOrCreate(//REVISOR - COMITE
+        $user4 = usuarios::updateOrCreate(//COMITE
             ['curp'=>'000000000000000001'],
             [
             'foto' => 'DefaultM.jpg',
@@ -85,12 +85,12 @@ class UsuariosSeeder extends Seeder
             'ap_paterno'=>'Montiel',
             'ap_materno'=>'Leyva',
             
-            'email'=>'ind@toluca.tecnm.mx',
+            'email'=>'sonia95_369@vuket.org',
             'password'=> Hash::make('123'),
             'telefono'=>'0000000001',
             'estado'=>'alta,registrado'
         ]);
-        $user5 = usuarios::updateOrCreate(//REVISOR - AUTOR
+        $user5 = usuarios::updateOrCreate(//REVISOR - COMITE
             ['curp'=>'000000000000000002'],
             [
             'foto' => 'DefaultH.jpg',
@@ -98,12 +98,12 @@ class UsuariosSeeder extends Seeder
             'ap_paterno'=>'Flores',
             'ap_materno'=>'Fuentes',
             
-            'email'=>'aafloresf@uaemex.mx',
+            'email'=>'tusputeydu@gufum.com',
             'password'=> Hash::make('123'),
             'telefono'=>'0000000002',
             'estado'=>'alta,registrado'
         ]);
-        $user6 = usuarios::updateOrCreate(//AUTOR - REVISOR
+        $user6 = usuarios::updateOrCreate(//AUTOR
             ['curp'=>'000000000000000003'],
             [
             'foto' => 'DefaultM.jpg',
@@ -111,12 +111,12 @@ class UsuariosSeeder extends Seeder
             'ap_paterno'=>'Hernandez',
             'ap_materno'=>'Cardona',
             
-            'email'=>'bhernandezc@toluca.tecnm.mx',
+            'email'=>'7c5fea1caa@emailawb.pro',
             'password'=> Hash::make('123'),
             'telefono'=>'0000000003',
             'estado'=>'alta,registrado'
         ]);
-        $user7 = usuarios::updateOrCreate(//AUTOR - REVISOR
+        $user7 = usuarios::updateOrCreate(//COMITE - AUTOR
             ['curp'=>'000000000000000004'],
             [
             'foto' => 'DefaultM.jpg',
@@ -124,31 +124,31 @@ class UsuariosSeeder extends Seeder
             'ap_paterno'=>'García',
             'ap_materno'=>'Gaitan',
             
-            'email'=>'bgarciag@toluca.tecnm.mx',
+            'email'=>'7c5fea1ca@emailawb.pro',
             'password'=> Hash::make('123'),
             'telefono'=>'0000000004',
             'estado'=>'alta,registrado'
         ]);
-        $user8 = usuarios::updateOrCreate(//AUTOR - REVISOR
+        $user8 = usuarios::updateOrCreate(//COMITE - AUTOR - REVISOR
             ['curp'=>'000000000000000005'],
             [
             'foto' => 'DefaultH.jpg',
-            'nombre'=>'Usuario',
-            'ap_paterno'=>'Revisor',
-            'ap_materno'=>'NMMSAIUDA',
+            'nombre'=>'Drew',
+            'ap_paterno'=>'Brees',
+            'ap_materno'=>'Christopher',
             
             'email'=>'jisok30016@gholar.com',
             'password'=> Hash::make('123'),
             'telefono'=>'0000000005',
             'estado'=>'alta,registrado'
         ]);
-        $user9 = usuarios::updateOrCreate(//AUTOR - REVISOR
+        $user9 = usuarios::updateOrCreate(//AUTOR
             ['curp'=>'000000000000000006'],
             [
             'foto' => 'DefaultH.jpg',
-            'nombre'=>'Usuario2',
-            'ap_paterno'=>'Revisor2',
-            'ap_materno'=>'NMMSAIUDA2',
+            'nombre'=>'Alvin',
+            'ap_paterno'=>'Kamara',
+            'ap_materno'=>'Mentian',
             
             'email'=>'juancarlos4_139@vuket.org',
             'password'=> Hash::make('123'),
@@ -159,13 +159,26 @@ class UsuariosSeeder extends Seeder
             ['curp'=>'000000000000000007'],
             [
             'foto' => 'DefaultH.jpg',
-            'nombre'=>'Usuario3',
-            'ap_paterno'=>'Autor3',
-            'ap_materno'=>'NMMSAIUDA3',
+            'nombre'=>'Juan',
+            'ap_paterno'=>'Carlos',
+            'ap_materno'=>'Bodoque',
             
             'email'=>'48aufvf6oq@dygovil.com',
             'password'=> Hash::make('123'),
             'telefono'=>'0000000007',
+            'estado'=>'alta,registrado'
+        ]);
+        $user11 = usuarios::updateOrCreate(//AUTOR - REVISOR
+            ['curp'=>'000000000000000008'],
+            [
+            'foto' => 'DefaultH.jpg',
+            'nombre'=>'Ian',
+            'ap_paterno'=>'Blas',
+            'ap_materno'=>'Aubert',
+            
+            'email'=>'deus.infortuni@gmail.com',
+            'password'=> Hash::make('123'),
+            'telefono'=>'0000000008',
             'estado'=>'alta,registrado'
         ]);
         
@@ -178,6 +191,7 @@ class UsuariosSeeder extends Seeder
         $user7->assignRole(4);
         $user8->assignRole(4);
         $user9->assignRole(4);
-        
+        $user10->assignRole(4);
+        $user11->assignRole(4);
     }
 }

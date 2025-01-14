@@ -13,23 +13,23 @@ class AreasSeeder extends Seeder
      */
     public function run(): void
     {
-        areas::create([
+        areas::firstOrCreate([
             'nombre'=>'Computación',
             'descripcion'=>'Temas relacionados con la informática'
         ]);
-        areas::create([
+        areas::firstOrCreate([
             'nombre'=>'Residuos',
             'descripcion'=>'Articulos que se enfocan en la gestión, tratamiento y valorización de residuos'
         ]);
-        areas::create([
+        areas::firstOrCreate([
             'nombre'=>'Energia',
             'descripcion'=>'Abarca temas relacionados con la producción, distribución y uso de la energía'
         ]);
-        areas::create([
+        areas::firstOrCreate([
             'nombre'=>'Nanotecnología',
             'descripcion'=>'Estudio y la manipulación de la materia a escala nanométrica'
         ]);
-        areas::create([
+        areas::firstOrCreate([
             'nombre'=>'Sociedad',
             'descripcion'=>'Abarca una amplia gama de temas relacionados con las ciencias sociales y humanidades'
         ]);

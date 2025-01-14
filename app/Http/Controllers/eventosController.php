@@ -10,6 +10,7 @@ use App\Models\participantes;
 use App\Models\articulos;
 use App\Models\articulosAutores;
 use App\Models\revisoresArticulos;
+use Carbon\Carbon;
 
 class EventosController extends Controller
 {
@@ -85,6 +86,17 @@ class EventosController extends Controller
     public function show(string $id)
     {
         $evento=eventos::find($id);
+        
+        $fechaHoy = Carbon::now();
+
+        if ($evento->fecha_inicio <= $fechaHoy && $fechaHoy <= $evento->fecha_fin && $evento->estado != 2) {
+            $evento->estado = 2; // Cambiar a "en curso"
+            $evento->save();
+        } elseif ($fechaHoy > $evento->fecha_fin && $evento->estado != 3) {
+            $evento->estado = 3; // Cambiar a "finalizado"
+            $evento->save();
+        }
+
         $url= 'SGEA/storage/app/public/EventImgs/'.$evento->acronimo.$evento->edicion.'/logo';
         $evento->logo = $url.'/'. $evento->logo;
         return view ('Eventos.read',compact('evento'));
@@ -131,7 +143,7 @@ class EventosController extends Controller
         }
         
         $evento->update($NuevosDatos);
-        return redirect('/eventos')->with('info','Informacion Actualizada');
+        return redirect('/eventos')->with('info','Información Actualizada');
     }
 
     public function destroy(string $id)
@@ -230,7 +242,7 @@ class EventosController extends Controller
         $evento->save(); 
     
         if ($evento->estado !== 4) {
-            return redirect()->back()->with('error', 'El evento se ha Cancelado');
+            return redirect()->back()->with('error', 'El evento se ha cancelado');
         } else {
             return redirect()->back()->with('info', 'El evento ha sido cancelado');
         }
@@ -250,7 +262,7 @@ class EventosController extends Controller
                             "¿Hace buen uso de la ortografía y la gramática, contiene párrafos cortos y no más de 4 páginas?",
                             "¿El trabajo es accesible a un público no especializado?"
                         ],
-            'OptionAnswers' =>['RechazoFuerte','Rechazar','Rechazo debil','Aceptacion debil','Aceptar','Aceptacien fuerte']
+            'OptionAnswers' =>['RechazoFuerte','Rechazar','Rechazo debil','Aceptación débil','Aceptar','Aceptación fuerte']
         ];
         $jsonData = json_encode($data, JSON_PRETTY_PRINT);
         // Definir la ruta del archivo dentro del directorio 'storage/app/public'
@@ -289,7 +301,7 @@ class EventosController extends Controller
         // Guardar el archivo JSON actualizado
         Storage::put($fileName, $jsonData);
 
-        return redirect('eventos/'.$evento->id)->with('success','Se configuro el Evento Correctamente' );
+        return redirect('eventos/'.$evento->id)->with('success','Se configuró el Evento Correctamente' );
         
     }
 

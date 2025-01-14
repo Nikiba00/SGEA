@@ -131,7 +131,7 @@
                         @endforeach
                     </div>
                 @else
-                    <strong>Aun no hay imágenes en el sistema</strong>
+                    <strong>Aún no hay imágenes en el sistema</strong>
                 @endif
             {!! Form::file('logo', ['id' => 'logo', 'class' => 'form-control', 'accept' => 'image/jpeg, image/png, image/webp']) !!}
             {!! Form::hidden('logo', null, ['id' => 'selected_img']) !!}

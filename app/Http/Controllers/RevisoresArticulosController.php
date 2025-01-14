@@ -26,16 +26,12 @@ class RevisoresArticulosController extends Controller
         //catalogos 
         $articulos = articulos::select('id', 'titulo')->OrderBy('titulo')->get();
         $areas = areas::select('id', 'nombre')->OrderBy('nombre')->get();
-        //usuarios que no sean autores
-        // $usuarios=usuarios::where('id','!=',1)->whereNotIn('id', function($query) {
-        //             $query->select('usuario_id')
-        //             ->from('articulos_autores');
-        //         })->get();
-        //Todos los ususarios
-        $usuarios = usuarios::select('nombre', 'ap_paterno', 'ap_materno', 'id')
-            ->where('id', '!=', 1)->OrderBy('ap_paterno')->get();
 
-        return view('Revisores_Articulos.index', compact('articulos', 'areas', 'usuarios', 'articles'));
+        $usuariosRevisores = usuarios::role('Revisor')->select('nombre', 'ap_paterno', 'ap_materno', 'id')
+            ->OrderBy('ap_paterno')
+            ->get();
+
+        return view('Revisores_Articulos.index', compact('articulos', 'areas', 'usuariosRevisores', 'articles'));
     }
 
     public function store(Request $request)
@@ -147,7 +143,7 @@ class RevisoresArticulosController extends Controller
                 ->where('evento_id', $evento_id)
                 ->get();
 
-            
+
 
             if ($revisores->count() === 3 && $revisores->every(fn($rev) => $rev->puntuacion !== null)) {
                 $evento = eventos::find($evento_id);
@@ -199,8 +195,8 @@ class RevisoresArticulosController extends Controller
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'astiviamax@gmail.com';
-            $mail->Password = 'diulyvcniykrwacn';
+            $mail->Username = 'iblasaub@gmail.com';
+            $mail->Password = 'voftedeboocuvkuv';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -213,7 +209,7 @@ class RevisoresArticulosController extends Controller
             $mail->CharSet = 'UTF-8';
             $subject = "Información Importante";
             $message = "Hola <strong>$user->nombre</strong>:\n
-                            El propósito de este mensaje es informar que usted ha sido asignado como revisor para el artículo <strong>$articulo->titulo</strong> en el evento <strong>$evento</strong>\n\n
+                            El propósito de este mensaje es informar que usted ha sido asignado como revisor para el artículo <strong>$articulo->titulo</strong> en el evento <strong>$evento</strong>\n\nPor favor accede a tu cuenta de SGEA para proceder con la revisión.\n\n
                             Atentamente:\n<strong>SGEA</strong>\n\n
                             <footer style='font-size:80%;'>Este mensaje es generado de forma automática por lo que no es necesario responder a este correo. En caso de ser un error ignora este mensaje.</footer>";
             //Estructuramos el correo

@@ -11,6 +11,9 @@ use App\Http\Controllers\RevisoresArticulosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\CesionDerechosController;
+use App\Http\Controllers\PagosController;
+use App\Http\Controllers\AgendasController;
 
 
 Route::resource('areas', AreasController::class)->middleware('auth');
@@ -40,10 +43,10 @@ Route::put('{evento_id}/articulo/{id}', [ArticulosController::class, 'update']);
     Route::post('/insert-user', [UsuariosController::class, 'insertUser'])->name('insertar-usuario');
 
 //REPORTES
-//Route::post('{eventoId}/articulo/{articuloId}/generarReporte', [ReportesController::class, 'crearReporteArticulo'])->name('generarReporteArticulo')->middleware('auth');
 Route::post('{eventoId}_{articuloId}/generarReporte', [ReportesController::class, 'crearReporteArticulo'])->middleware('auth');
-
-Route::post('{eventoId}', [ReportesController::class, 'crearReporteEvento'])->middleware('auth');
+Route::post('eventos/{eventoId}/reporteEvento', [ReportesController::class, 'crearReporteEvento'])->middleware('auth');
+Route::post('{evento_id}_{articuloId}/descargarCesion', [CesionDerechosController::class, 'descargarCesionDerechos'])->middleware('auth');
+Route::post('{evento_id}_{articuloId}/descargarReferencia', [PagosController::class, 'descargarReferencia'])->middleware('auth');
 /*Route::middleware(['auth'])->group(function () {
     //REPORTES DE ARTICULOS (AUTORES)
     Route::middleware('can:reportes.generar')->group(function () {
@@ -67,8 +70,10 @@ Route::get('{evento_id}/autor/{id}', [ArticulosAutoresController::class, 'show']
 Route::get('{eventoId}/autores/{id}/edit', [ArticulosAutoresController::class, 'edit'])->middleware('auth');
 
 Route::get('{eventoId}_{id}/MisArticulos/', [ArticulosController::class, 'AuthorArticles'])->middleware('auth');
-//INCLUIR LA RUTA DE REPORTES
+//RUTA DE REPORTES
 Route::get('{eventoId}_{id}/MisReportes/', [ReportesController::class, 'index'])->middleware('auth');
+//RUTA DE AGENDA
+Route::get('{eventoId}/Agenda/', [AgendasController::class, 'index'])->middleware('auth');
 
 Route::get('{eventoId}_{id}/Evaluaciones/', [ArticulosController::class, 'Evaluations'])->middleware('auth');
 Route::get('{eventoId}_{id}/detalle/', [ArticulosController::class, 'Details'])->middleware('auth');
